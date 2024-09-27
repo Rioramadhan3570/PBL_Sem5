@@ -18,7 +18,7 @@ class _NavbarState extends State<Navbar> {
       _selectedIndex = index; // Mengubah indeks yang dipilih
     });
 
-    // Navigasi berdasarkan indeks yang dipilih
+    // Navigasi berdasarkan indeks yang dipili
     switch (index) {
       case 0:
         // Navi
