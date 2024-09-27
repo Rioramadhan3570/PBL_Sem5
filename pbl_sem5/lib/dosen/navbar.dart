@@ -21,7 +21,7 @@ class _NavbarState extends State<Navbar> {
     // Navigasi berdasarkan indeks yang dipilih
     switch (index) {
       case 0:
-        // Navigasi ke halaman utama
+        // Navi
           Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Utama()), // Ganti dengan halaman profil
