@@ -8,8 +8,9 @@ class Profil extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Menggunakan Header sebagai AppBar
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60), 
+        preferredSize: const Size.fromHeight(60),
         child: const ProfileHeader(),
       ),
       body: Padding(
@@ -52,7 +53,10 @@ class Profil extends StatelessWidget {
                       // Aksi ketika "Edit Profile" ditekan
                     },
                   ),
-                  Divider(height: 1, color: const Color.fromARGB(255, 255, 255, 255)), // Pembatas antar item
+                  Divider(
+                      height: 1,
+                      color: const Color.fromARGB(
+                          255, 255, 255, 255)), // Pembatas antar item
                   ProfileMenuItem(
                     icon: Icons.favorite,
                     title: 'Postingan yang Disukai',
