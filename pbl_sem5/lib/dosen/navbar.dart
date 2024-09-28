@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pbl_sem5/dosen/informasi.dart';
 import 'package:pbl_sem5/dosen/utama.dart';
-import 'profil.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
