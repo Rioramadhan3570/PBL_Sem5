@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
       // Menggunakan Header sebagai AppBar
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60), 
-        child: const Header(),
+        child: const ProfileHeader(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,25 +35,36 @@ class ProfileScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
             SizedBox(height: 30),
-            // Item menu "Edit Profile"
-            ProfileMenuItem(
-              icon: Icons.edit,
-              title: 'Edit profile',
-              onTap: () {
-                // Aksi ketika "Edit Profile" ditekan
-              },
-            ),
-            ProfileMenuItem(
-              icon: Icons.favorite,
-              title: 'Postingan yang Disukai',
-              onTap: () {
-                // Aksi ketika "Postingan yang Disukai" ditekan
-              },
+            // Container untuk membungkus dua item menu
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(color: Colors.black, width: 1.0),
+              ),
+              child: Column(
+                children: [
+                  // Item menu "Edit Profile"
+                  ProfileMenuItem(
+                    icon: Icons.edit,
+                    title: 'Edit Profile',
+                    onTap: () {
+                      // Aksi ketika "Edit Profile" ditekan
+                    },
+                  ),
+                  Divider(height: 1, color: const Color.fromARGB(255, 255, 255, 255)), // Pembatas antar item
+                  ProfileMenuItem(
+                    icon: Icons.favorite,
+                    title: 'Postingan yang Disukai',
+                    onTap: () {
+                      // Aksi ketika "Postingan yang Disukai" ditekan
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
-      
       // Menggunakan BottomNavbar sebagai navigasi bawah
       bottomNavigationBar: const Navbar(),
     );
@@ -76,18 +87,20 @@ class ProfileMenuItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         child: Row(
           children: [
-            Icon(icon, size: 28),
+            // Ikon dengan ukuran dan padding lebih besar
+            Icon(icon, size: 24),
             SizedBox(width: 16),
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 16),
+            // Ikon panah ke kanan
+            Icon(Icons.chevron_right, size: 24),
           ],
         ),
       ),

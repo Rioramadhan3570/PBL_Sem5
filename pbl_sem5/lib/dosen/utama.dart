@@ -10,7 +10,7 @@ class Utama extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60), // Ukuran header
-        child: const Header(), // Memanggil header
+        child: const ProfileHeader(), // Memanggil header
       ),
       body: const Center(
         child: Text('Isi dari halaman utama'), // Konten body
