@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends StatefulWidget {
   const ProfileHeader({Key? key}) : super(key: key);
+
+  @override
+  _ProfileHeaderState createState() => _ProfileHeaderState();
+}
+
+class _ProfileHeaderState extends State<ProfileHeader> {
+  bool _isNotified = false;
+
+  void _toggleNotification() {
+    setState(() {
+      _isNotified = !_isNotified; // Mengubah status notifikasi
+    });
+
+    // Navigasi ke halaman notifikasi
+    Navigator.pushNamed(context, '/notifikasi');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFFFC300), // Yellow background color
+      color: const Color(0xFFFFC300), // Warna latar belakang kuning
       padding: const EdgeInsets.only(top: 40, left: 16, right: 8, bottom: 16),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Centered "Profil" text
+          // Teks "Profil" yang terpusat
           const Text(
             'Profil',
             style: TextStyle(
@@ -20,17 +36,18 @@ class ProfileHeader extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          // Icons positioned to the right
+          // Ikon yang diposisikan di sebelah kanan
           Positioned(
             right: 0,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-                  onPressed: () {
-                    // Handle notification icon press
-                  },
+                  icon: Icon(
+                    Icons.notifications,
+                    color: _isNotified ? Colors.white : Colors.white,
+                  ),
+                  onPressed: _toggleNotification,
                 ),
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
