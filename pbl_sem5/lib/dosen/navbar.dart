@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pbl_sem5/dosen/informasi.dart'; 
+import 'package:pbl_sem5/dosen/riwayat.dart'; 
 import 'package:pbl_sem5/dosen/utama.dart';      
 import 'package:pbl_sem5/dosen/profil.dart';     
 import 'package:pbl_sem5/dosen/notifikasi.dart'; // Import halaman notifikasi

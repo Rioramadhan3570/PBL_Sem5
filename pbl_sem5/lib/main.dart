@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pbl_sem5/dosen/informasi.dart';
 import 'package:pbl_sem5/dosen/navbar.dart';
 import 'package:pbl_sem5/dosen/utama.dart';
+import 'package:pbl_sem5/dosen/riwayat.dart';
 import 'package:pbl_sem5/dosen/profil.dart';
 import 'package:pbl_sem5/dosen/notifikasi.dart'; // Import halaman Notifikasi
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         '/utama': (context) => Utama(),
         '/informasi': (context) => Informasi(),
         // '/pengajuan': (context) => Pengajuan(), // Tambahkan halaman pengajuan
-        // '/riwayat': (context) => Riwayat(), // Tambahkan halaman riwayat
+        '/riwayat': (context) => Riwayat(), // Tambahkan halaman riwayat
         '/profil': (context) => Profil(),
         '/notifikasi': (context) => Notifikasi(), // Route untuk halaman notifikasi
       },
