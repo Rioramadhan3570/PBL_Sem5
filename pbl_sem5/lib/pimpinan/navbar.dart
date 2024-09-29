@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pbl_sem5/dosen/informasi.dart'; 
-import 'package:pbl_sem5/dosen/riwayat.dart'; 
-import 'package:pbl_sem5/dosen/utama_dosen.dart';      
-import 'package:pbl_sem5/dosen/profil.dart';     
-import 'package:pbl_sem5/dosen/notifikasi_dosen.dart'; // Import halaman notifikasi
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -22,16 +17,16 @@ class _NavbarState extends State<Navbar> {
     final currentRoute = ModalRoute.of(context)?.settings.name;
 
     switch (currentRoute) {
-      case '/utama':
+      case '/utama_pimpinan':
         _selectedIndex = 0;
         break;
-      case '/informasi':
+      case '/monitoring':
         _selectedIndex = 1;
         break;
-      case '/pengajuan':
+      case '/informasi':
         _selectedIndex = 2;
         break;
-      case '/riwayat':
+      case '/pengajuan':
         _selectedIndex = 3;
         break;
       case '/profil':
@@ -56,16 +51,16 @@ class _NavbarState extends State<Navbar> {
 
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, '/utama_dosen');
+        Navigator.pushReplacementNamed(context, '/utama_pimpinan');
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, '/informasi');
+        Navigator.pushReplacementNamed(context, '/monitoring');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/pengajuan');
+        Navigator.pushReplacementNamed(context, '/informasi');
         break;
       case 3:
-        Navigator.pushReplacementNamed(context, '/riwayat');
+        Navigator.pushReplacementNamed(context, '/pengajuan');
         break;
       case 4:
         Navigator.pushReplacementNamed(context, '/profil');
@@ -88,9 +83,9 @@ class _NavbarState extends State<Navbar> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             _buildNavItem(context, Icons.home, 'Utama', 0),
-            _buildNavItem(context, Icons.info, 'Informasi', 1),
-            _buildNavItem(context, Icons.monitor_heart, 'Pengajuan', 2),
-            _buildNavItem(context, Icons.assignment, 'Riwayat', 3),
+            _buildNavItem(context, Icons.monitor_heart, 'Monitoring', 1),
+            _buildNavItem(context, Icons.info, 'Informasi', 2),
+            _buildNavItem(context, Icons.assignment, 'Pengajuan', 3),
             _buildNavItem(context, Icons.person, 'Profil', 4),
           ],
         ),

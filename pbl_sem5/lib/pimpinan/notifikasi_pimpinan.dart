@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'header_notifikasi.dart'; // Import Header Notifikasi
 import 'navbar.dart'; // Import Bottom Navbar
 
-class Notifikasi extends StatelessWidget {
+class NotifikasiPimpinan extends StatelessWidget {
   // Daftar notifikasi yang akan ditampilkan
   final List<Map<String, String>> notifications = [
     {
@@ -43,7 +43,7 @@ class Notifikasi extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Anda Direkomendasikan!',
+                      'Ada Pengajuan Baru!',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: const Color(0xFFF1511B),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProfileHeader extends StatefulWidget {
-  const ProfileHeader({Key? key}) : super(key: key);
+class PengajuanHeader extends StatefulWidget {
+  const PengajuanHeader({Key? key}) : super(key: key);
 
   @override
   _ProfileHeaderState createState() => _ProfileHeaderState();
 }
 
-class _ProfileHeaderState extends State<ProfileHeader> {
+class _ProfileHeaderState extends State<PengajuanHeader> {
   bool _isNotified = false;
 
   void _toggleNotification() {
@@ -16,7 +16,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     });
 
     // Navigasi ke halaman notifikasi
-    Navigator.pushNamed(context, '/notifikasi_dosen');
+    Navigator.pushNamed(context, '/notifikasi_pimpinan');
   }
 
   @override
@@ -27,9 +27,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Teks "Profil" yang terpusat
           const Text(
-            'Profil',
+            'Daftar Pengajuan',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
