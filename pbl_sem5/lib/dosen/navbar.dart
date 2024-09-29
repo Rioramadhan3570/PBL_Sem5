@@ -1,49 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:pbl_sem5/dosen/informasi.dart'; 
-import 'package:pbl_sem5/dosen/riwayat.dart'; 
-import 'package:pbl_sem5/dosen/utama_dosen.dart';      
-import 'package:pbl_sem5/dosen/profil.dart';     
-import 'package:pbl_sem5/dosen/notifikasi_dosen.dart'; // Import halaman notifikasi
+import 'utama_dosen.dart';
+import 'informasi.dart';
+import 'riwayat.dart';
+import 'profil.dart';
+import 'notifikasi_dosen.dart';
 
 class Navbar extends StatefulWidget {
-  const Navbar({Key? key}) : super(key: key);
+  final int selectedIndex; // Tambahkan parameter untuk indeks yang dipilih
+
+  const Navbar({Key? key, this.selectedIndex = 0}) : super(key: key);
 
   @override
   _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
-  int _selectedIndex = 0; // Indeks default
+  late int _selectedIndex; // Indeks default
   Color notificationIconColor = Colors.black; // Warna awal ikon notifikasi
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final currentRoute = ModalRoute.of(context)?.settings.name;
-
-    switch (currentRoute) {
-      case '/utama':
-        _selectedIndex = 0;
-        break;
-      case '/informasi':
-        _selectedIndex = 1;
-        break;
-      case '/pengajuan':
-        _selectedIndex = 2;
-        break;
-      case '/riwayat':
-        _selectedIndex = 3;
-        break;
-      case '/profil':
-        _selectedIndex = 4;
-        break;
-      case '/notifikasi':
-        _selectedIndex = -1; // Ketika di halaman notifikasi
-        notificationIconColor = Colors.white; // Ubah warna ikon notifikasi menjadi putih
-        break;
-      default:
-        _selectedIndex = 0;
-    }
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex; // Inisialisasi dengan parameter yang diberikan
   }
 
   void _onItemTapped(int index) {

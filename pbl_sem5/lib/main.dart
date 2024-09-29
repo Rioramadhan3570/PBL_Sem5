@@ -4,6 +4,7 @@ import 'package:pbl_sem5/dosen/informasi.dart'; // Halaman informasi
 import 'package:pbl_sem5/dosen/riwayat.dart'; // Halaman riwayat
 import 'package:pbl_sem5/dosen/profil.dart'; // Halaman profil
 import 'package:pbl_sem5/dosen/notifikasi_dosen.dart'; // Halaman profil
+import 'package:pbl_sem5/login/mulai.dart';
 import 'package:pbl_sem5/login/login.dart'; // Halaman login
 import 'package:pbl_sem5/pimpinan/utama_pimpinan.dart'; // Halaman utama dosen
 import 'package:pbl_sem5/pimpinan/pengajuan.dart'; 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Aplikasi Dosen & Pimpinan',
       initialRoute: '/',
       routes: {
-        '/': (context) => Login(), // Rute halaman login
+        '/': (context) => Mulai(), // Rute halaman login
         '/utama_dosen': (context) => UtamaDosen(),  // Rute halaman utama dosen
         '/informasi': (context) => Informasi(), // Rute halaman informasi
         '/riwayat': (context) => Riwayat(), // Rute halaman riwayat

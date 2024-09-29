@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'header_riwayat.dart'; // Import header
-import 'navbar.dart'; // Import navbar
-import 'detail_informasiRiwayat.dart'; // Import DetailInformasi
+import 'navbar.dart';
+import 'detail_informasiRiwayat.dart'; // Pastikan ini diimpor
+import 'header_riwayat.dart';
 
 class Riwayat extends StatefulWidget {
-  const Riwayat({super.key});
+  const Riwayat({Key? key}) : super(key: key);
 
   @override
   _RiwayatState createState() => _RiwayatState();
@@ -17,12 +17,13 @@ class _RiwayatState extends State<Riwayat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60), // Ukuran header
-        child: const Header(), // Memanggil header
+        preferredSize: const Size.fromHeight(60),
+        child: const HeaderRiwayat(),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Memberi padding di seluruh konten
+        padding: const EdgeInsets.all(16.0), // Padding di seluruh konten
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,8 +33,8 @@ class _RiwayatState extends State<Riwayat> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      _isSertifikasiActive = true; // Set Sertifikasi sebagai tombol aktif
-                      _isPelatihanActive = false; // Nonaktifkan Pelatihan
+                      _isSertifikasiActive = true;
+                      _isPelatihanActive = false;
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -53,8 +54,8 @@ class _RiwayatState extends State<Riwayat> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      _isPelatihanActive = true; // Set Pelatihan sebagai tombol aktif
-                      _isSertifikasiActive = false; // Nonaktifkan Sertifikasi
+                      _isPelatihanActive = true;
+                      _isSertifikasiActive = false;
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -123,7 +124,7 @@ class _RiwayatState extends State<Riwayat> {
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Memanggil navbar
+      bottomNavigationBar: const Navbar(selectedIndex: 3), // Memastikan navbar tetap pada Riwayat
     );
   }
 
@@ -131,7 +132,7 @@ class _RiwayatState extends State<Riwayat> {
   Widget _buildCard({required String title, required String subtitle}) {
     return GestureDetector(
       onTap: () {
-        // Navigasi ke halaman DetailInformasi
+        // Navigasi ke halaman DetailInformasiRiwayat
         Navigator.push(
           context,
           MaterialPageRoute(

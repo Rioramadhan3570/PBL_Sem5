@@ -17,7 +17,7 @@ class DetailInformasi extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60), // Ukuran header
-        child: const Header(), // Memanggil header
+        child: const HeaderRiwayat(), // Memanggil header
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -45,21 +45,15 @@ class DetailInformasi extends StatelessWidget {
                   // Icon dan Title
                   Row(
                     children: [
-                      // Icon
+                      // Icon Placeholder atau bisa diganti dengan logo/icon yang sesuai
                       Container(
                         margin: const EdgeInsets.only(right: 10),
                         child: Column(
                           children: [
-                            // Placeholder for your icon
-                            Container(
-                              width: 30,
-                              height: 30,
-                              color: Colors.blue, // Ubah sesuai dengan logo atau icon yang diinginkan
-                            ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              color: Colors.red, // Ubah sesuai dengan logo atau icon yang diinginkan
+                            Icon(
+                              Icons.info, // Contoh ikon
+                              color: Colors.blue,
+                              size: 30,
                             ),
                           ],
                         ),
@@ -102,6 +96,8 @@ class DetailInformasi extends StatelessWidget {
                     style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(height: 10),
+
+                  // Bukti Upload Sertifikasi
                   Text(
                     'Bukti Upload Sertifikasi',
                     style: const TextStyle(
@@ -111,19 +107,21 @@ class DetailInformasi extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // Tombol Aksi
+                  // Tombol Aksi (Selengkapnya dan Upload Sertifikat)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           // Tindakan untuk tombol "Selengkapnya"
+                          // Anda bisa menambahkan aksi di sini
                         },
                         child: const Text('Selengkapnya'),
                       ),
                       ElevatedButton(
                         onPressed: () {
                           // Tindakan untuk tombol "Upload Sertifikat"
+                          // Anda bisa menambahkan aksi di sini
                         },
                         child: const Text('Upload Sertif'),
                       ),
@@ -135,7 +133,7 @@ class DetailInformasi extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Memanggil navbar
+      bottomNavigationBar: const Navbar(selectedIndex: 3), // Navbar dengan Riwayat sebagai aktif
     );
   }
 }
