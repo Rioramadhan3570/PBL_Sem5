@@ -103,8 +103,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   onPressed: () {
-                    // Aksi ketika tombol diklik
-                    // Tambahkan logika login di sini
+                Navigator.pushNamed(context, '/utamacontoh');
                   },
                   child: const Text(
                     'Login',
@@ -119,7 +118,6 @@ class _LoginState extends State<Login> {
                 // Tautan untuk pendaftaran
                 TextButton(
                   onPressed: () {
-                    
                   },
                   child: const Text(
                     'Belum Memiliki Akun? Register',
