@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'utama_dosen.dart';
-import 'informasi.dart';
+import 'informasi_dosen.dart';
 import 'riwayat.dart';
 import 'profil.dart';
 import 'notifikasi_dosen.dart';
