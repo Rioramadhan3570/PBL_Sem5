@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/notifikasi_dosen': (context) => NotifikasiDosen(), // Rute halaman profil
 
 
-        '/utama_pimpinan': (context) => UtamaPimpinan(),  // Rute halaman utama pimpinan
+        '/utama_pimpinan': (context) => HalamanUtamaPimpinan(),  // Rute halaman utama pimpinan
         '/pengajuan': (context) => Pengajuan(),  // Rute halaman utama pimpinan
         '/notifikasi_pimpinan': (context) => NotifikasiPimpinan(),  // Rute halaman utama pimpinan
         '/utamacontoh': (context) => Utamacontoh(),  // DIRECT KE PILIHAN USER SEMENTARA YAAA

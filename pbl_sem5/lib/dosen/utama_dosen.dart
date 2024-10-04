@@ -207,7 +207,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(16, 50, 16, 8),
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 8),
             child: Text(
               'Informasi Terbaru',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

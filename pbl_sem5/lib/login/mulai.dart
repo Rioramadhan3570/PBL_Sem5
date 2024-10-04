@@ -26,25 +26,22 @@ class Mulai extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Tambahkan konten lainnya di sini jika perlu
                   ],
                 ),
               ),
-              // Tombol Mulai di bagian bawah
-              Padding(
-                padding: const EdgeInsets.all(1.0), // Padding di sekitar tombol
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 60),
                 child: SizedBox(
-                  width: 350, // Tombol mengisi lebar yang tersedia
-                  height: 60, // Tinggi tombol dapat disesuaikan
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // Warna tombol
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20), // Sudut melengkung tombol
+                width: 350, // Lebar tombol yang diinginkan
+                height: 70, // Tinggi tombol yang lebih besar
+                child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     onPressed: () {
-                      // Aksi ketika tombol diklik (navigasi ke halaman login)
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -55,7 +52,7 @@ class Mulai extends StatelessWidget {
                     child: const Text(
                       'Mulai',
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.white,
                       ),
                       textAlign: TextAlign.center, // Memastikan teks tombol rata tengah
