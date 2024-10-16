@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PengajuanHeader extends StatefulWidget {
-  const PengajuanHeader({Key? key}) : super(key: key);
+  final bool showBackButton; // Tambahkan parameter
+
+  const PengajuanHeader({Key? key, this.showBackButton = false}) : super(key: key); // Default false
 
   @override
-  _ProfileHeaderState createState() => _ProfileHeaderState();
+  _PengajuanHeaderState createState() => _PengajuanHeaderState();
 }
 
-class _ProfileHeaderState extends State<PengajuanHeader> {
-  bool _isNotified = false;
+class _PengajuanHeaderState extends State<PengajuanHeader> {
+  bool _isNotified = false; // Pastikan variabel ini dideklarasikan
 
   void _toggleNotification() {
     setState(() {
@@ -30,7 +32,7 @@ class _ProfileHeaderState extends State<PengajuanHeader> {
           const Text(
             'Daftar Pengajuan',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 21,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -57,6 +59,17 @@ class _ProfileHeaderState extends State<PengajuanHeader> {
               ],
             ),
           ),
+          // Menambahkan ikon kembali jika diperlukan
+          if (widget.showBackButton)
+            Positioned(
+              left: 0,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white), // Ikon kembali
+                onPressed: () {
+                  Navigator.pop(context); // Kembali ke halaman sebelumnya
+                },
+              ),
+            ),
         ],
       ),
     );

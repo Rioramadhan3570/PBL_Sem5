@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'header_pengajuan.dart'; // Import header
 import 'navbar.dart'; // Import navbar
+import 'detail_pengajuan.dart'; // Import halaman detail
 
 class Pengajuan extends StatefulWidget {
   const Pengajuan({super.key});
@@ -18,7 +19,7 @@ class _PengajuanState extends State<Pengajuan> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60), // Ukuran header
-        child: const PengajuanHeader(), // Memanggil header
+        child: const PengajuanHeader(), // Memanggil header tanpa ikon kembali
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0), // Memberi padding di seluruh konten
@@ -116,16 +117,16 @@ class _PengajuanState extends State<Pengajuan> {
   Widget _buildCard({required String title, required List<String> subtitles, bool isHighlight = false}) {
     return GestureDetector(
       onTap: () {
-        // Navigasi ke halaman DetailInformasi
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => DetailPengajuan(
-        //       title: title,
-        //       subtitles: subtitles,
-        //     ),
-        //   ),
-        // );
+        // Navigasi ke halaman DetailPengajuan
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPengajuan(
+              title: title,
+              subtitles: subtitles,
+            ),
+          ),
+        );
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),

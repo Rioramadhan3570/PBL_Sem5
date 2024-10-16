@@ -30,6 +30,9 @@ class _NavbarState extends State<Navbar> {
       case '/pengajuan':
         _selectedIndex = 3;
         break;
+      case '/detail_pengajuan': // Tambahkan ini
+        _selectedIndex = 3; // Tetap di tab Pengajuan
+        break;
       case '/profil':
         _selectedIndex = 4;
         break;
