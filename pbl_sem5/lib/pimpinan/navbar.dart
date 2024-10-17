@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'utama_pimpinan.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class _NavbarState extends State<Navbar> {
       case '/monitoring':
         _selectedIndex = 1;
         break;
-      case '/informasi':
+      case '/informasi_pimpinan':
         _selectedIndex = 2;
         break;
       case '/pengajuan':
@@ -61,7 +60,7 @@ class _NavbarState extends State<Navbar> {
         Navigator.pushReplacementNamed(context, '/monitoring');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/informasi');
+        Navigator.pushReplacementNamed(context, '/informasi_pimpinan');
         break;
       case 3:
         Navigator.pushReplacementNamed(context, '/pengajuan');

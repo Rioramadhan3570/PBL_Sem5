@@ -9,6 +9,7 @@ import 'package:pbl_sem5/login/mulai.dart';
 import 'package:pbl_sem5/login/login.dart'; // Halaman login
 import 'package:pbl_sem5/login/registrasi.dart';
 import 'package:pbl_sem5/pimpinan/utama_pimpinan.dart'; // Halaman utama dosen
+import 'package:pbl_sem5/pimpinan/informasi_pimpinan.dart'; 
 import 'package:pbl_sem5/pimpinan/pengajuan.dart'; 
 import 'package:pbl_sem5/pimpinan/notifikasi_pimpinan.dart'; 
 import 'package:pbl_sem5/login/utamacontoh.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
 
 
         '/utama_pimpinan': (context) => HalamanUtamaPimpinan(),  // Rute halaman utama pimpinan
+        '/informasi_pimpinan': (context) => InformasiPimpinan(),  // Rute halaman informasi pimpinan
         '/pengajuan': (context) => Pengajuan(),  // Rute halaman utama pimpinan
         '/notifikasi_pimpinan': (context) => NotifikasiPimpinan(),  // Rute halaman utama pimpinan
         '/registrasi': (context) => Registrasi(),  // Rute ke halaman registrasi
