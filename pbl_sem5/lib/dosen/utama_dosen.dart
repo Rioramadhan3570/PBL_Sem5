@@ -74,7 +74,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Dimas | Dosen',
+                        'Axel Bagaskoro | Dosen',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
             child: Column(
               children: [
                 const Text(
-                  'Hallo, Dimas!',
+                  'Hallo, Axel!',
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

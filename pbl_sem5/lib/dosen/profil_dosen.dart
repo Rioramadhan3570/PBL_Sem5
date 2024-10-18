@@ -29,7 +29,7 @@ class ProfilDosen extends StatelessWidget {
             const SizedBox(height: 20),
             // Nama dan informasi profil
             const Text(
-              'Axel Bagaskara',
+              'Axel Bagaskoro',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
