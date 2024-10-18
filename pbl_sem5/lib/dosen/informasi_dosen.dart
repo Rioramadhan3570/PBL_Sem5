@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'navbar.dart';
+import 'detail_informasi_dosen.dart';
+import 'header_informasi.dart';
 
-// StatefulWidget untuk halaman informasi dosen
 class HalamanInformasiDosen extends StatefulWidget {
   final int selectedIndex;
   const HalamanInformasiDosen({Key? key, this.selectedIndex = 1})
@@ -12,22 +13,55 @@ class HalamanInformasiDosen extends StatefulWidget {
 }
 
 class _HalamanInformasiDosenState extends State<HalamanInformasiDosen> {
-  // Daftar kategori yang tersedia
   final List<String> _categories = ['Semua', 'Sertifikasi', 'Pelatihan'];
-  // Indeks kategori yang dipilih, default 0 (Semua)
   int _selectedCategoryIndex = 0;
+
+  final List<InformasiDetail> _allInformasi = [
+    InformasiDetail(
+      title:
+          'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
+      tempat: 'Gedung AH, Politeknik Negeri Malang',
+      tanggal: '12 Januari 2025',
+      waktu: '08.00 WIB - selesai',
+      biaya: 'Rp5.000.000 (Lima Juta Rupiah)',
+      vendor: 'PT. Microsoft Indonesia',
+      jenis: 'Profesi',
+      tagBidangMinat: ['Clustering', 'Data Analysis', 'Data Mining'],
+      tagMataKuliah: ['Data Mining', 'Basis Data'],
+      kuotaPeserta: '10 Orang',
+      kategori: 'Sertifikasi',
+    ),
+    InformasiDetail(
+      title:
+          'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
+      tempat: 'Gedung AH, Politeknik Negeri Malang',
+      tanggal: '12 Januari 2025',
+      waktu: '08.00 WIB - selesai',
+      biaya: 'Rp5.000.000 (Lima Juta Rupiah)',
+      vendor: 'PT. Microsoft Indonesia',
+      jenis: 'Profesi',
+      tagBidangMinat: ['Clustering', 'Data Analysis', 'Data Mining'],
+      tagMataKuliah: ['Data Mining', 'Basis Data'],
+      kuotaPeserta: '10 Orang',
+      kategori: 'Pelatihan',
+    )
+    // Add more items as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold menyediakan struktur dasar untuk halaman
     return Scaffold(
+            appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: HeaderInformasi(),
+      ),
       body: Column(
         children: [
-          _buildHeader(), // Bagian atas halaman
-          const SizedBox(height: 16), // Spasi vertikal
-          _buildCategorySelector(), // Pemilih kategori
+          const SizedBox(height: 16),
+          _buildCategorySelector(),
+          const SizedBox(height: 8),
           Expanded(
-            child: _buildSelectedView(), // Tampilan konten yang dipilih
+            child: _buildSelectedView(),
           ),
         ],
       ),
@@ -35,67 +69,10 @@ class _HalamanInformasiDosenState extends State<HalamanInformasiDosen> {
     );
   }
 
-  // Membangun bagian header dengan judul dan tombol-tombol
-  Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(115, 20, 16, 16),
-      decoration: const BoxDecoration(
-        // Gradien warna untuk latar belakang header
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFFFDD015),
-            Color(0xFFFEBF11),
-          ],
-          stops: [0.5, 1.0],
-        ),
-      ),
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: Center(
-                child: Text(
-                  'Informasi',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                // Tombol notifikasi
-                IconButton(
-                  icon: const Icon(Icons.notifications, color: Colors.white),
-                  onPressed: () {
-                    // Handle notification icon press
-                  },
-                ),
-                // Tombol logout
-                IconButton(
-                  icon: const Icon(Icons.logout, color: Colors.white),
-                  onPressed: () {
-                    // Handle logout icon press
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Membangun pemilih kategori
   Widget _buildCategorySelector() {
     return Container(
-      height: 50,
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      height: 35,
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(_categories.length, (index) {
@@ -107,19 +84,17 @@ class _HalamanInformasiDosenState extends State<HalamanInformasiDosen> {
                 });
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
-                  // Warna latar belakang berubah saat dipilih
                   color: _selectedCategoryIndex == index
-                      ? Color(0xFF0E1F43)
-                      : Color(0xFFDBDDE3),
+                      ? const Color(0xFF0E1F43)
+                      : const Color(0xFFDBDDE3),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
                   child: Text(
                     _categories[index],
                     style: TextStyle(
-                      // Warna teks berubah saat dipilih
                       color: _selectedCategoryIndex == index
                           ? Colors.white
                           : Colors.black,
@@ -135,89 +110,88 @@ class _HalamanInformasiDosenState extends State<HalamanInformasiDosen> {
     );
   }
 
-  // Memilih tampilan berdasarkan kategori yang dipilih
   Widget _buildSelectedView() {
+    List<InformasiDetail> filteredList;
     switch (_selectedCategoryIndex) {
-      case 0:
-        return _buildAllView();
       case 1:
-        return _buildCertificationView();
+        filteredList = _allInformasi
+            .where((info) => info.kategori == 'Sertifikasi')
+            .toList();
+        break;
       case 2:
-        return _buildTrainingView();
+        filteredList = _allInformasi
+            .where((info) => info.kategori == 'Pelatihan')
+            .toList();
+        break;
       default:
-        return Container(); // Tampilan kosong jika tidak ada yang cocok
+        filteredList = _allInformasi;
     }
-  }
 
-  // Tampilan untuk kategori 'Semua'
-  Widget _buildAllView() {
-    return ListView(
-      children: [
-        _buildInfoItem(
-            'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
-            Icons.school),
-        _buildInfoItem(
-            'Manajemen Database MySQL untuk Pengembangan Web', Icons.computer),
-        _buildInfoItem(
-            'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
-            Icons.school),
-      ],
+    return ListView.builder(
+      itemCount: filteredList.length,
+      padding: const EdgeInsets.only(top: 8),
+      itemBuilder: (context, index) {
+        return _buildInfoItem(filteredList[index]);
+      },
     );
   }
 
-  // Tampilan untuk kategori 'Sertifikasi'
-  Widget _buildCertificationView() {
-    return ListView(
-      children: [
-        _buildInfoItem(
-            'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
-            Icons.school),
-        _buildInfoItem(
-            'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
-            Icons.school),
-      ],
-    );
-  }
-
-  // Tampilan untuk kategori 'Pelatihan'
-  Widget _buildTrainingView() {
-    return ListView(
-      children: [
-        _buildInfoItem(
-            'Manajemen Database MySQL untuk Pengembangan Web', Icons.computer),
-      ],
-    );
-  }
-
-  // Membangun item informasi individual
-  Widget _buildInfoItem(String title, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        // Efek bayangan untuk card
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 40, color: Colors.blue),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 16),
+ Widget _buildInfoItem(InformasiDetail informasi) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HalamanDetailInformasiDosen(
+              informasi: informasi,
+              onNavigateBack: () {
+                Navigator.pop(context);
+                // Di sini Anda bisa menambahkan logika untuk memperbarui daftar
+                // jika diperlukan setelah pengajuan
+                setState(() {
+                  // Misalnya, memperbarui status informasi yang diajukan
+                });
+              },
             ),
           ),
-        ],
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF5E6),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              informasi.title,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              informasi.kategori,
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Tempat : ${informasi.tempat}',
+              style: const TextStyle(fontSize: 12),
+            ),
+            Text(
+              'Tanggal : ${informasi.tanggal}',
+              style: const TextStyle(fontSize: 12),
+            ),
+            Text(
+              'Waktu : ${informasi.waktu}',
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -98,7 +98,7 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
                   onPressed: () {
-                    // Handle logout icon press
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                   },
                 ),
               ],

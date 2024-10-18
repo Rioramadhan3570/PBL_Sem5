@@ -74,7 +74,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Axel Bagaskoro | Dosen',
+                        'Dimas | Dosen',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -91,14 +91,14 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
                 IconButton(
                   icon: const Icon(Icons.notifications, color: Colors.white),
                   onPressed: () {
-                    // Handle notification icon press
+                    Navigator.pushNamed(context, '/notifikasi_dosen');
                   },
                 ),
                 // Tombol logout
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
                   onPressed: () {
-                    // Handle logout icon press
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                   },
                 ),
               ],
@@ -110,7 +110,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
             child: Column(
               children: [
                 const Text(
-                  'Hallo, Rizky!',
+                  'Hallo, Dimas!',
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
