@@ -148,7 +148,7 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
   // Membangun bagian statistik dengan dua card
   Widget _buildStatsSection() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 50, 16, 5),
+      padding: const EdgeInsets.fromLTRB(16, 25, 16, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

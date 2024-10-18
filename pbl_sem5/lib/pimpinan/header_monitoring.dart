@@ -16,7 +16,7 @@ class _HeaderMonitoringState extends State<HeaderMonitoring> {
     });
 
     // Navigasi ke halaman notifikasi
-    Navigator.pushNamed(context, '/notifikasi_dosen');
+    Navigator.pushNamed(context, '/notifikasi_pimpinan');
   }
 
   @override
