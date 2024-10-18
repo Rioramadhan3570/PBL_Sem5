@@ -20,7 +20,7 @@ class _NavbarState extends State<Navbar> {
       case '/utama_pimpinan':
         _selectedIndex = 0;
         break;
-      case '/monitoring':
+      case '/monitoring_pimpinan':
         _selectedIndex = 1;
         break;
       case '/informasi_pimpinan':
@@ -32,7 +32,7 @@ class _NavbarState extends State<Navbar> {
       case '/detail_pengajuan': // Tambahkan ini
         _selectedIndex = 3; // Tetap di tab Pengajuan
         break;
-      case '/profil':
+      case '/profil_pimpinan':
         _selectedIndex = 4;
         break;
       case '/notifikasi':
@@ -57,7 +57,7 @@ class _NavbarState extends State<Navbar> {
         Navigator.pushReplacementNamed(context, '/utama_pimpinan');
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, '/monitoring');
+        Navigator.pushReplacementNamed(context, '/monitoring_pimpinan');
         break;
       case 2:
         Navigator.pushReplacementNamed(context, '/informasi_pimpinan');
@@ -66,7 +66,7 @@ class _NavbarState extends State<Navbar> {
         Navigator.pushReplacementNamed(context, '/pengajuan');
         break;
       case 4:
-        Navigator.pushReplacementNamed(context, '/profil');
+        Navigator.pushReplacementNamed(context, '/profil_pimpinan');
         break;
     }
   }

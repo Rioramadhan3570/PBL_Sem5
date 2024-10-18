@@ -16,7 +16,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     });
 
     // Navigasi ke halaman notifikasi
-    Navigator.pushNamed(context, '/notifikasi_dosen');
+    Navigator.pushNamed(context, '/notifikasi_pimpinan');
   }
 
   @override

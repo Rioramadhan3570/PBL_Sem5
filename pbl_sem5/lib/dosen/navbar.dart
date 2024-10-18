@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'utama_dosen.dart';
 import 'informasi_dosen.dart';
 import 'riwayat.dart';
-import 'profil.dart';
+import 'profil_dosen.dart';
 import 'notifikasi_dosen.dart';
 
 class Navbar extends StatefulWidget {
@@ -46,7 +46,7 @@ class _NavbarState extends State<Navbar> {
         Navigator.pushReplacementNamed(context, '/riwayat');
         break;
       case 4:
-        Navigator.pushReplacementNamed(context, '/profil');
+        Navigator.pushReplacementNamed(context, '/profil_dosen');
         break;
     }
   }
