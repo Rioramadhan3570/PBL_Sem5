@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'header_profil.dart'; // Import Header
 import 'navbar.dart'; // Import BottomNavbar
+import 'riwayat.dart'; // Import Header
+
 
 class ProfilPimpinan extends StatelessWidget {
   final int selectedIndex;
@@ -63,7 +65,10 @@ class ProfilPimpinan extends StatelessWidget {
                     icon: Icons.history,
                     title: 'Riwayat',
                     onTap: () {
-                      // Aksi ketika "Postingan yang Disukai" ditekan
+                       Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RiwayatPage()),
+                    );
                     },
                   ),
                   const Divider(

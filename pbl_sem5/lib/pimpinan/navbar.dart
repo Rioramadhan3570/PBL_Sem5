@@ -29,15 +29,18 @@ class _NavbarState extends State<Navbar> {
       case '/pengajuan':
         _selectedIndex = 3;
         break;
-      case '/detail_pengajuan': // Tambahkan ini
+      case '/detail_pengajuan':
         _selectedIndex = 3; // Tetap di tab Pengajuan
         break;
       case '/profil_pimpinan':
         _selectedIndex = 4;
         break;
       case '/notifikasi':
-        _selectedIndex = -1; // Ketika di halaman notifikasi
+        _selectedIndex = -1;
         notificationIconColor = Colors.white; // Ubah warna ikon notifikasi menjadi putih
+        break;
+      case '/riwayat': // Tambahkan ini
+        _selectedIndex = 4; // Tidak ada ikon yang dipilih di halaman riwayat
         break;
       default:
         _selectedIndex = 0;
@@ -98,7 +101,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget _buildNavItem(BuildContext context, IconData icon, String title, int index) {
     final isSelected = _selectedIndex == index;
-    final isNotifikasi = _selectedIndex == -1; // Mengecek apakah halaman notifikasi
+    final isNoSelection = _selectedIndex == -1; // Kondisi untuk halaman tanpa ikon terpilih
 
     return GestureDetector(
       onTap: () => _onItemTapped(index),
@@ -107,12 +110,12 @@ class _NavbarState extends State<Navbar> {
         children: <Widget>[
           Icon(
             icon,
-            color: (isNotifikasi || !isSelected) ? Colors.white : Colors.black, // Semua ikon putih jika notifikasi
+            color: (isNoSelection || !isSelected) ? Colors.white : Colors.black, // Semua ikon putih jika tidak ada yang dipilih
           ),
           Text(
             title,
             style: TextStyle(
-              color: (isNotifikasi || !isSelected) ? Colors.white : Colors.black, // Teks tetap putih jika notifikasi
+              color: (isNoSelection || !isSelected) ? Colors.white : Colors.black, // Teks tetap putih jika tidak ada yang dipilih
             ),
           ),
         ],
