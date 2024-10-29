@@ -71,27 +71,6 @@ class DetailPengajuan extends StatelessWidget {
                   _buildDetailSection('Tag Mata Kuliah', 'Data Mining'),
                   const SizedBox(height: 8),
 
-                  // Ikon centang dan silang
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end, // Mengatur tombol ke kanan
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          // Fungsi untuk tombol check
-                        },
-                        icon: const Icon(Icons.check, color: Colors.green), // Ikon centang berwarna hijau
-                        iconSize: 35,
-                      ),
-                      const SizedBox(width: 1), // Jarak antara ikon
-                      IconButton(
-                        onPressed: () {
-                          // Fungsi untuk tombol cancel
-                        },
-                        icon: const Icon(Icons.close, color: Colors.red), // Ikon silang berwarna merah
-                        iconSize: 35,
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
