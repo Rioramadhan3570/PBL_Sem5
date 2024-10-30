@@ -56,7 +56,6 @@ class _HalamanDetailInformasiDosenState
     setState(() {
       isSubmitted = true;
     });
-    // Here you would typically make an API call to update the server
     Future.delayed(const Duration(seconds: 1), () {
       widget.onNavigateBack();
     });

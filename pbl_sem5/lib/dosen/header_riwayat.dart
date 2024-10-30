@@ -15,8 +15,11 @@ class _HeaderRiwayatState extends State<HeaderRiwayat> {
       _isNotified = !_isNotified; // Mengubah status notifikasi
     });
 
-    // Navigasi ke halaman notifikasi
     Navigator.pushNamed(context, '/notifikasi_dosen');
+  }
+
+    void _onBackButtonPressed() {
+    Navigator.pop(context); // Kembali ke halaman sebelumnya
   }
 
   @override
@@ -56,6 +59,17 @@ class _HeaderRiwayatState extends State<HeaderRiwayat> {
                   },
                 ),
               ],
+            ),
+          ),
+                    Positioned(
+            left: 0, // Memposisikan tombol kembali ke kiri
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white), // Ikon kembali
+              onPressed: () {
+                _onBackButtonPressed();
+                // Kirim informasi kembali ke Navbar
+                // Ini bisa dilakukan dengan menggunakan provider atau state management lain
+              },
             ),
           ),
         ],

@@ -1,30 +1,100 @@
 import 'package:flutter/material.dart';
-import 'header_riwayat.dart'; // Pastikan Anda mengimpor header yang sama
-import 'navbar.dart'; // Pastikan Anda mengimpor navbar yang sama
+import 'header_riwayat.dart';
+import 'navbar.dart';
 
-class DetailInformasi extends StatelessWidget {
+class DetailInformasi extends StatefulWidget {
   final String title;
   final String subtitle;
 
   const DetailInformasi({
     Key? key,
     required this.title,
-    required this.subtitle,
-  }) : super(key: key);
+    required this.subtitle, }) : super(key: key);
+
+  @override
+  _DetailInformasiState createState() => _DetailInformasiState();
+}
+
+class _DetailInformasiState extends State<DetailInformasi> {
+  bool isUploaded = false; // Status upload sertifikat
+
+  // Fungsi untuk menampilkan bottom sheet upload sertifikat
+  void showUploadBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Upload Sertif',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                ),
+                child: Center(
+                  child: Icon(Icons.cloud_upload, size: 50, color: Colors.grey),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text('sertif.jpg'), // Placeholder untuk nama file
+              const SizedBox(height: 20),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Tanggal Kadaluwarsa',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Aksi penyimpanan dan update status
+                  setState(() {
+                    isUploaded = true; // Update status menjadi uploaded
+                  });
+                  Navigator.of(context).pop(); // Tutup bottom sheet
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Simpan',
+                  style: TextStyle(color: Colors.white), // Ubah warna teks menjadi putih
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60), // Ukuran header
-        child: const HeaderRiwayat(), // Memanggil header
+        preferredSize: const Size.fromHeight(60),
+        child: const HeaderRiwayat(),
       ),
-      body: Padding(
+      body: SingleChildScrollView( // Tambahkan SingleChildScrollView di sini
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Card untuk Detail Informasi
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -42,25 +112,19 @@ class DetailInformasi extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Icon dan Title
                   Row(
                     children: [
-                      // Icon Placeholder atau bisa diganti dengan logo/icon yang sesuai
                       Container(
                         margin: const EdgeInsets.only(right: 10),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.info, // Contoh ikon
-                              color: Colors.blue,
-                              size: 30,
-                            ),
-                          ],
+                        child: Icon(
+                          Icons.info,
+                          color: Colors.blue,
+                          size: 30,
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          title,
+                          widget.title,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -71,14 +135,12 @@ class DetailInformasi extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    subtitle,
+                    widget.subtitle,
                     style: const TextStyle(fontSize: 16, color: Colors.black54),
                   ),
                   const SizedBox(height: 10),
-                  const Divider(), // Garis pemisah
+                  const Divider(),
                   const SizedBox(height: 10),
-
-                  // Detail Pelaksanaan
                   Text(
                     'Pelaksanaan',
                     style: const TextStyle(
@@ -96,8 +158,6 @@ class DetailInformasi extends StatelessWidget {
                     style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(height: 10),
-
-                  // Bukti Upload Sertifikasi
                   Text(
                     'Bukti Upload Sertifikasi',
                     style: const TextStyle(
@@ -106,34 +166,60 @@ class DetailInformasi extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  // Tombol Aksi (Selengkapnya dan Upload Sertifikat)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Tindakan untuk tombol "Selengkapnya"
-                          // Anda bisa menambahkan aksi di sini
-                        },
-                        child: const Text('Selengkapnya'),
+                  if (isUploaded) // Kondisi jika sertifikat sudah di-upload
+                    Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.orange[50],
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Tindakan untuk tombol "Upload Sertifikat"
-                          // Anda bisa menambahkan aksi di sini
-                        },
-                        child: const Text('Upload Sertif'),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 100,
+                            color: const Color.fromARGB(255, 255, 255, 255), // Tempat preview dokumen
+                          ),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                            ),
+                            child: const Text(
+                              'Aktif Sampai 12-09-2026',
+                              style: TextStyle(color: Colors.white), // Ubah warna teks menjadi putih
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    )
+                  else
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Tindakan untuk tombol "Selengkapnya"
+                          },
+                          child: const Text('Selengkapnya'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            showUploadBottomSheet(context); // Panggil bottom sheet upload
+                          },
+                          child: const Text('Upload Sertif'),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(selectedIndex: 3), // Navbar dengan Riwayat sebagai aktif
+      bottomNavigationBar: const Navbar(selectedIndex: 3),
     );
   }
 }
