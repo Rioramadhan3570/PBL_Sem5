@@ -1,57 +1,36 @@
 import 'package:flutter/material.dart';
+import 'utama_pimpinan.dart';
+import 'informasi_pimpinan.dart';
+import 'monitoring_pimpinan.dart';
+import 'profil_pimpinan.dart';
+import 'notifikasi_pimpinan.dart';
 
 class Navbar extends StatefulWidget {
-  const Navbar({Key? key}) : super(key: key);
+  final int selectedIndex; // Tambahkan parameter untuk indeks yang dipilih
+
+  const Navbar({Key? key, this.selectedIndex = 0}) : super(key: key);
 
   @override
   _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
-  int _selectedIndex = 0; // Indeks default
+  late int _selectedIndex; // Indeks default
   Color notificationIconColor = Colors.black; // Warna awal ikon notifikasi
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final currentRoute = ModalRoute.of(context)?.settings.name;
-
-    switch (currentRoute) {
-      case '/utama_pimpinan':
-        _selectedIndex = 0;
-        break;
-      case '/monitoring_pimpinan':
-        _selectedIndex = 1;
-        break;
-      case '/informasi_pimpinan':
-        _selectedIndex = 2;
-        break;
-      case '/pengajuan':
-        _selectedIndex = 3;
-        break;
-      case '/detail_pengajuan':
-        _selectedIndex = 3; // Tetap di tab Pengajuan
-        break;
-      case '/profil_pimpinan':
-        _selectedIndex = 4;
-        break;
-      case '/notifikasi':
-        _selectedIndex = -1;
-        notificationIconColor = Colors.white; // Ubah warna ikon notifikasi menjadi putih
-        break;
-      case '/riwayat': // Tambahkan ini
-        _selectedIndex = 4; // Tidak ada ikon yang dipilih di halaman riwayat
-        break;
-      default:
-        _selectedIndex = 0;
-    }
+  void initState() {
+    super.initState();
+    _selectedIndex =
+        widget.selectedIndex; // Inisialisasi dengan parameter yang diberikan
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       if (index == 4) {
-        notificationIconColor = Colors.black; // Reset warna jika navigasi ke Profil
+        notificationIconColor =
+            Colors.black; // Reset warna jika navigasi ke Profil
       }
     });
 
@@ -89,8 +68,8 @@ class _NavbarState extends State<Navbar> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             _buildNavItem(context, Icons.home, 'Utama', 0),
-            _buildNavItem(context, Icons.monitor_heart, 'Monitoring', 1),
-            _buildNavItem(context, Icons.info, 'Informasi', 2),
+            _buildNavItem(context, Icons.info, 'Monitoring', 1),
+            _buildNavItem(context, Icons.monitor_heart, 'Informasi', 2),
             _buildNavItem(context, Icons.assignment, 'Pengajuan', 3),
             _buildNavItem(context, Icons.person, 'Profil', 4),
           ],
@@ -99,9 +78,11 @@ class _NavbarState extends State<Navbar> {
     );
   }
 
-  Widget _buildNavItem(BuildContext context, IconData icon, String title, int index) {
+  Widget _buildNavItem(
+      BuildContext context, IconData icon, String title, int index) {
     final isSelected = _selectedIndex == index;
-    final isNoSelection = _selectedIndex == -1; // Kondisi untuk halaman tanpa ikon terpilih
+    final isNotifikasi =
+        _selectedIndex == -1; // Mengecek apakah halaman notifikasi
 
     return GestureDetector(
       onTap: () => _onItemTapped(index),
@@ -110,12 +91,16 @@ class _NavbarState extends State<Navbar> {
         children: <Widget>[
           Icon(
             icon,
-            color: (isNoSelection || !isSelected) ? Colors.white : Colors.black, // Semua ikon putih jika tidak ada yang dipilih
+            color: (isNotifikasi || !isSelected)
+                ? Colors.white
+                : Colors.black, // Semua ikon putih jika notifikasi
           ),
           Text(
             title,
             style: TextStyle(
-              color: (isNoSelection || !isSelected) ? Colors.white : Colors.black, // Teks tetap putih jika tidak ada yang dipilih
+              color: (isNotifikasi || !isSelected)
+                  ? Colors.white
+                  : Colors.black, // Teks tetap putih jika notifikasi
             ),
           ),
         ],

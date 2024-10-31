@@ -3,10 +3,10 @@ import 'package:pbl_sem5/dosen/utama_dosen.dart'; // Halaman utama dosen
 import 'package:pbl_sem5/dosen/informasi_dosen.dart'; // Halaman informasi
 import 'package:pbl_sem5/dosen/riwayat.dart'; // Halaman riwayat
 import 'package:pbl_sem5/dosen/profil_dosen.dart'; // Halaman profil
-import 'package:pbl_sem5/dosen/notifikasi_dosen.dart'; // Halaman profil
+import 'package:pbl_sem5/dosen/notifikasi_dosen.dart'; // Halaman notifikasi
+import 'package:pbl_sem5/dosen/pengajuan_dosen.dart'; // Halaman Penajuan
 import 'package:pbl_sem5/login/confirm_regis.dart';
 import 'package:pbl_sem5/login/mulai.dart';
-import 'package:pbl_sem5/login/login.dart'; // Halaman login
 import 'package:pbl_sem5/login/registrasi.dart';
 import 'package:pbl_sem5/pimpinan/utama_pimpinan.dart'; // Halaman utama dosen
 import 'package:pbl_sem5/pimpinan/monitoring_pimpinan.dart'; 
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/riwayat': (context) => Riwayat(), // Rute halaman riwayat
         '/profil_dosen': (context) => ProfilDosen(), // Rute halaman profil
         '/notifikasi_dosen': (context) => NotifikasiDosen(), // Rute halaman profil
+        '/pengajuan_dosen': (context) => PengajuanDosen(), // Rute halaman profil
 
 
         '/utama_pimpinan': (context) => HalamanUtamaPimpinan(),  // Rute halaman utama pimpinan

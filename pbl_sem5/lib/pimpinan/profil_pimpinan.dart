@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pbl_sem5/pimpinan/surat_tugas_pimpinan.dart';
 import 'header_profil.dart'; // Import Header
 import 'navbar.dart'; // Import BottomNavbar
 import 'riwayat.dart'; // Import Header
+import 'edit_profil_pimpinan.dart'; // Pastikan ini diimpor
 
 
 class ProfilPimpinan extends StatelessWidget {
@@ -54,7 +56,13 @@ class ProfilPimpinan extends StatelessWidget {
                     icon: Icons.edit,
                     title: 'Edit Profile',
                     onTap: () {
-                      // Aksi ketika "Edit Profile" ditekan
+                      // Navigasi ke halaman EditProfilDosen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilPimpinan(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(
@@ -79,7 +87,13 @@ class ProfilPimpinan extends StatelessWidget {
                     icon: Icons.message,
                     title: 'Surat Tugas',
                     onTap: () {
-                      // Aksi ketika "Postingan yang Disukai" ditekan
+                      // Aksi ketika "Surat Tugas" ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SuratTugasPimpinan(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -89,7 +103,7 @@ class ProfilPimpinan extends StatelessWidget {
         ),
       ),
       // Menggunakan BottomNavbar sebagai navigasi bawah
-      bottomNavigationBar: const Navbar(),
+      bottomNavigationBar: Navbar(selectedIndex: 4,),
     );
   }
 }

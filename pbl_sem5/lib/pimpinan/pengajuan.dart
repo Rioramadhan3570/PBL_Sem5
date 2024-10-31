@@ -109,7 +109,7 @@ class _PengajuanState extends State<Pengajuan> {
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Memanggil navbar
+      bottomNavigationBar: Navbar(selectedIndex: 3,), // Memanggil navbar
     );
   }
 

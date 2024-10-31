@@ -84,7 +84,7 @@ class NotifikasiPimpinan extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Gunakan Navbar di bawah
+      bottomNavigationBar: Navbar(selectedIndex: 6,), // Gunakan Navbar di bawah
     );
   }
 }

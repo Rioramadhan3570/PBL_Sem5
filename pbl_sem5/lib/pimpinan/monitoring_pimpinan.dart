@@ -64,7 +64,7 @@ class MonitoringPimpinan extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const Navbar(),
+      bottomNavigationBar: Navbar(selectedIndex: 1,),
     );
   }
 

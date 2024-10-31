@@ -156,7 +156,7 @@ class _InformasiPimpinanState extends State<InformasiPimpinan> {
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Memanggil navbar
+      bottomNavigationBar: Navbar(selectedIndex: 2,), // Memanggil navbar
     );
   }
 

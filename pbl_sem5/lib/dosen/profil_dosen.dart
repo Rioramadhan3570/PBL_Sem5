@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'header_profil.dart'; // Import Header
 import 'navbar.dart'; // Import BottomNavbar
+import 'edit_profil_dosen.dart'; // Pastikan ini diimpor
+import 'postingan_disukai_dosen.dart'; // Pastikan ini diimpor
+import 'surat_tugas_dosen.dart'; // Pastikan ini diimpor
 
 class ProfilDosen extends StatelessWidget {
   final int selectedIndex;
@@ -51,7 +54,13 @@ class ProfilDosen extends StatelessWidget {
                     icon: Icons.edit,
                     title: 'Edit Profile',
                     onTap: () {
-                      // Aksi ketika "Edit Profile" ditekan
+                      // Navigasi ke halaman EditProfilDosen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilDosen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(
@@ -63,6 +72,12 @@ class ProfilDosen extends StatelessWidget {
                     title: 'Postingan yang Disukai',
                     onTap: () {
                       // Aksi ketika "Postingan yang Disukai" ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PostinganDisukaiDosen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(
@@ -73,7 +88,13 @@ class ProfilDosen extends StatelessWidget {
                     icon: Icons.message,
                     title: 'Surat Tugas',
                     onTap: () {
-                      // Aksi ketika "Postingan yang Disukai" ditekan
+                      // Aksi ketika "Surat Tugas" ditekan
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SuratTugasDosen(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -83,7 +104,7 @@ class ProfilDosen extends StatelessWidget {
         ),
       ),
       // Menggunakan BottomNavbar sebagai navigasi bawah
-      bottomNavigationBar: const Navbar(),
+      bottomNavigationBar: const Navbar(selectedIndex: 4),
     );
   }
 }
@@ -93,7 +114,8 @@ class ProfileMenuItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const ProfileMenuItem({super.key, 
+  const ProfileMenuItem({
+    super.key,
     required this.icon,
     required this.title,
     required this.onTap,

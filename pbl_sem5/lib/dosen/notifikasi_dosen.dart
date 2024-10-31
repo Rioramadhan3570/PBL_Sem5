@@ -84,7 +84,7 @@ class NotifikasiDosen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const Navbar(), // Gunakan Navbar di bawah
+      bottomNavigationBar: const Navbar(selectedIndex: 6), // Gunakan Navbar di bawah
     );
   }
 }

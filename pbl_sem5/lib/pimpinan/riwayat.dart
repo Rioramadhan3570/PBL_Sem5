@@ -3,7 +3,6 @@ import 'package:pbl_sem5/pimpinan/detail_pengajuan.dart';
 import 'navbar.dart';
 import 'header_riwayat_pimpin.dart';
 import 'detail_informasi_pimpinan.dart'; // Import halaman detail informasi pimpinan
-import 'detail_pengajuan.dart'; // Import halaman detail informasi pimpinan
 
 void main() {
   runApp(MyApp());
@@ -61,7 +60,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const Navbar(),
+      bottomNavigationBar: Navbar(selectedIndex: 6,),
     );
   }
 

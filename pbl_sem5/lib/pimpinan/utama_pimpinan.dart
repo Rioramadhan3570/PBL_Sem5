@@ -33,7 +33,7 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
           ),
         ],
       ),
-      bottomNavigationBar: const Navbar(),
+      bottomNavigationBar: Navbar(selectedIndex: 0,),
     );
   }
 
@@ -91,14 +91,14 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
                 IconButton(
                   icon: const Icon(Icons.notifications, color: Colors.white),
                   onPressed: () {
-                    // Handle notification icon press
+                    Navigator.pushNamed(context, '/notifikasi_pimpinan');
                   },
                 ),
                 // Tombol logout
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => true);
                   },
                 ),
               ],
