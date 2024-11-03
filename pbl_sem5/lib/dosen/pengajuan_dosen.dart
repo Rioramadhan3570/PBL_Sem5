@@ -3,6 +3,7 @@ import 'header_pengajuan.dart';
 import 'navbar.dart';
 import 'sertifikasi_form.dart';
 import 'pelatihan_form.dart';
+import 'detail_pengajuan_dosen.dart';
 
 class PengajuanDosen extends StatefulWidget {
   const PengajuanDosen({Key? key}) : super(key: key);
@@ -76,6 +77,35 @@ class _PengajuanDosenState extends State<PengajuanDosen> {
     );
   }
 
+  // Navigate to detail page with sample data
+  void _navigateToDetail() {
+    final detail = DetailPengajuanDosen(
+      title: 'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
+      tempat: 'Jakarta',
+      tanggal: '20 November 2024',
+      waktu: '09:00 - 16:00',
+      biaya: 'Rp 2.000.000',
+      vendor: 'Microsoft',
+      jenis: 'Sertifikasi',
+      tagBidangMinat: ['Web Development', 'Programming'],
+      tagMataKuliah: ['Pemrograman Web', 'Desain Web'],
+      kuotaPeserta: '100 Peserta',
+      kategori: 'Teknologi Informasi',
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HalamanDetailInformasiDosen(
+          informasi: detail,
+          onNavigateBack: () {
+            // Implement callback here if needed
+          },
+        ),
+      ),
+    );
+  }
+
   // Build tab selection widget
   Widget _buildTabSelector(String label, String tabValue) {
     return Expanded(
@@ -88,7 +118,7 @@ class _PengajuanDosenState extends State<PengajuanDosen> {
         child: Container(
           decoration: BoxDecoration(
             color: _selectedTab == tabValue
-                ? const Color(0xFF0D47A1)
+                ? const Color(0xFF0E1F43)
                 : Colors.grey[300],
             borderRadius: BorderRadius.circular(20),
           ),
@@ -203,49 +233,52 @@ class _PengajuanDosenState extends State<PengajuanDosen> {
                   return const SizedBox.shrink();
                 }
                 
-                return Card(
-                  color: const Color(0xFFFFF5E6),
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: _navigateToDetail, // Navigate to detail on card tap
+                  child: Card(
+                    color: const Color(0xFFFFF5E6),
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  'Microsoft Technology Associate (MTA) - Web Development Fundamentals',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: _getStatusColor(),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                _status,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _getStatusColor(),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  _status,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -255,7 +288,7 @@ class _PengajuanDosenState extends State<PengajuanDosen> {
         ],
       ),
       floatingActionButton: _buildAddButton(),
-      bottomNavigationBar: const Navbar(selectedIndex: 2),
+      bottomNavigationBar: Navbar(selectedIndex: 2),
     );
   }
 }
