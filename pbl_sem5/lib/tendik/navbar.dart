@@ -37,7 +37,7 @@ class _NavbarState extends State<Navbar> {
         Navigator.pushReplacementNamed(context, '/utama_tendik');
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, '/informasi');
+        Navigator.pushReplacementNamed(context, '/informasi_tendik');
         break;
       case 2:
         Navigator.pushReplacementNamed(context, '/pengajuan_tendik');
