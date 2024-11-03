@@ -90,7 +90,7 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
                 // Tombol notifikasi
                 IconButton(
                   icon: const Icon(Icons.notifications, color: Colors.white),
-                  onPressed: () {
+                  onPressed: () { 
                     Navigator.pushNamed(context, '/notifikasi_pimpinan');
                   },
                 ),

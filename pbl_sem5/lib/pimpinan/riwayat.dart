@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pbl_sem5/pimpinan/detail_pengajuan.dart';
 import 'navbar.dart';
 import 'header_riwayat_pimpin.dart';
-import 'detail_informasi_pimpinan.dart'; // Import halaman detail informasi pimpinan
+import 'detail_riwayat_rekom.dart'; // Import halaman detail informasi pimpinan
 
 void main() {
   runApp(MyApp());
@@ -100,7 +100,7 @@ class RekomContent extends StatelessWidget {
             // Navigasi ke halaman detail informasi pimpinan
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DetailInformasiPimpinan()),
+              MaterialPageRoute(builder: (context) => DetailRiwayatRekom()),
             );
           },
         ),
