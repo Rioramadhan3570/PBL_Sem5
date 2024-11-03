@@ -3,14 +3,14 @@ import 'navbar.dart';
 import 'detail_informasiRiwayat.dart'; // Pastikan ini diimpor
 import 'header_riwayat.dart';
 
-class Riwayat extends StatefulWidget {
-  const Riwayat({Key? key}) : super(key: key);
+class RiwayatDosen extends StatefulWidget {
+  const RiwayatDosen({Key? key}) : super(key: key);
 
   @override
-  _RiwayatState createState() => _RiwayatState();
+  _RiwayatDosenState createState() => _RiwayatDosenState();
 }
 
-class _RiwayatState extends State<Riwayat> {
+class _RiwayatDosenState extends State<RiwayatDosen> {
   bool _isMandiriActive = true; // Menyimpan status tombol Mandiri aktif
   bool _isRekomActive = false; // Menyimpan status tombol Rekom aktif
 

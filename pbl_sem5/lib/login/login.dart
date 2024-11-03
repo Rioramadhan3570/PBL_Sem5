@@ -9,8 +9,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool _obscureText = true; // Status untuk menyembunyikan password
-  final TextEditingController _usernameController = TextEditingController(); // Kontroler untuk username
-  final TextEditingController _passwordController = TextEditingController(); // Kontroler untuk password
+  final TextEditingController _usernameController =
+      TextEditingController(); // Kontroler untuk username
+  final TextEditingController _passwordController =
+      TextEditingController(); // Kontroler untuk password
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class _LoginState extends State<Login> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/Login.png'), // Sesuaikan dengan lokasi gambar Anda
+                image: AssetImage(
+                    'images/Login.png'), // Sesuaikan dengan lokasi gambar Anda
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,20 +53,28 @@ class _LoginState extends State<Login> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: const Color.fromARGB(255, 255, 255, 255), width: 2), // Border putih
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          width: 2), // Border putih
                     ),
                     child: TextField(
-                      controller: _usernameController, // Menghubungkan kontroler
-                      style: const TextStyle(color: Colors.white), // Mengubah warna teks input menjadi putih
+                      controller:
+                          _usernameController, // Menghubungkan kontroler
+                      style: const TextStyle(
+                          color: Colors
+                              .white), // Mengubah warna teks input menjadi putih
                       decoration: InputDecoration(
                         hintText: 'Username', // Contoh nama pengguna
-                        hintStyle: const TextStyle(color: Colors.white54), // Warna teks placeholder
+                        hintStyle: const TextStyle(
+                            color: Colors.white54), // Warna teks placeholder
                         prefixIcon: const Icon(
                           Icons.person,
-                          color: Colors.white, // Mengubah warna ikon menjadi putih
+                          color:
+                              Colors.white, // Mengubah warna ikon menjadi putih
                         ),
                         border: InputBorder.none, // Menghapus border default
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10), // Padding dalam
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 10), // Padding dalam
                       ),
                     ),
                   ),
@@ -73,28 +84,39 @@ class _LoginState extends State<Login> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: const Color.fromARGB(255, 255, 255, 255), width: 2), // Border putih
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          width: 2), // Border putih
                     ),
                     child: TextField(
-                      controller: _passwordController, // Menghubungkan kontroler
-                      style: const TextStyle(color: Colors.white), // Mengubah warna teks input menjadi putih
-                      obscureText: _obscureText, // Menyembunyikan password jika _obscureText true
+                      controller:
+                          _passwordController, // Menghubungkan kontroler
+                      style: const TextStyle(
+                          color: Colors
+                              .white), // Mengubah warna teks input menjadi putih
+                      obscureText:
+                          _obscureText, // Menyembunyikan password jika _obscureText true
                       decoration: InputDecoration(
                         hintText: 'Password', // Placeholder untuk password
-                        hintStyle: const TextStyle(color: Colors.white54), // Warna teks placeholder
+                        hintStyle: const TextStyle(
+                            color: Colors.white54), // Warna teks placeholder
                         prefixIcon: IconButton(
                           icon: Icon(
-                            _obscureText ? Icons.visibility : Icons.visibility_off,
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                             color: const Color.fromARGB(255, 255, 255, 255),
                           ),
                           onPressed: () {
                             setState(() {
-                              _obscureText = !_obscureText; // Toggle status obscureText
+                              _obscureText =
+                                  !_obscureText; // Toggle status obscureText
                             });
                           },
                         ),
                         border: InputBorder.none, // Menghapus border default
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10), // Padding dalam
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 10), // Padding dalam
                       ),
                     ),
                   ),
@@ -106,24 +128,37 @@ class _LoginState extends State<Login> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       onPressed: () {
-                        String username = _usernameController.text; // Ambil username dari kontroler
-                        String password = _passwordController.text; // Ambil password dari kontroler
-                        
+                        String username = _usernameController
+                            .text; // Ambil username dari kontroler
+                        String password = _passwordController
+                            .text; // Ambil password dari kontroler
+
                         // Logika untuk pengalihan berdasarkan username
-                        if (username == 'axel') {
-                          Navigator.pushNamed(context, '/utama_dosen'); // Halaman utama dosen
-                        } else if (username == 'dimas') {
-                          Navigator.pushNamed(context, '/utama_pimpinan'); // Halaman utama pimpinan
+                        // Map untuk memetakan username ke rute
+                        final userRoutes = {
+                          'axel': '/utama_dosen',
+                          'dimas': '/utama_pimpinan',
+                          'rizky': '/utama_tendik',
+                        };
+
+                        // Memeriksa apakah username ada di dalam Map
+                        if (userRoutes.containsKey(username)) {
+                          Navigator.pushNamed(
+                              context,
+                              userRoutes[
+                                  username]!); // Menavigasi ke halaman yang sesuai
                         } else {
                           // Tampilkan pesan error jika username tidak cocok
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Username tidak terdaftar')),
+                            const SnackBar(
+                                content: Text('Username tidak terdaftar')),
                           );
                         }
                       },

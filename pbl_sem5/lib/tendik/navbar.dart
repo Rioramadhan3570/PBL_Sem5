@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'utama_dosen.dart';
-import 'informasi_dosen.dart';
-import 'riwayat_dosen.dart';
-import 'profil_dosen.dart';
-import 'notifikasi_dosen.dart';
+import 'utama_tendik.dart';
+import 'informasi_tendik.dart';
+import 'riwayat_tendik.dart';
+import 'profil_tendik.dart';
+import 'notifikasi_tendik.dart';
 
 class Navbar extends StatefulWidget {
   final int selectedIndex; // Tambahkan parameter untuk indeks yang dipilih
@@ -34,19 +34,19 @@ class _NavbarState extends State<Navbar> {
 
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, '/utama_dosen');
+        Navigator.pushReplacementNamed(context, '/utama_tendik');
         break;
       case 1:
         Navigator.pushReplacementNamed(context, '/informasi');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/pengajuan_dosen');
+        Navigator.pushReplacementNamed(context, '/pengajuan_tendik');
         break;
       case 3:
-        Navigator.pushReplacementNamed(context, '/riwayat_dosen');
+        Navigator.pushReplacementNamed(context, '/riwayat_tendik');
         break;
       case 4:
-        Navigator.pushReplacementNamed(context, '/profil_dosen');
+        Navigator.pushReplacementNamed(context, '/profil_tendik');
         break;
     }
   }
