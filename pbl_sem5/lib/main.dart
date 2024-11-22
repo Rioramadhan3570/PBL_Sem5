@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pbl_sem5/dosen/utama_dosen.dart';
 import 'package:pbl_sem5/dosen/riwayat_dosen.dart';
-import 'package:pbl_sem5/dosen/profil_dosen.dart';
 import 'package:pbl_sem5/dosen/notifikasi_dosen.dart';
 import 'package:pbl_sem5/dosen/pengajuan_dosen.dart';
+import 'package:pbl_sem5/pages/dosen/profil/profil_dosen_page.dart';
 import 'package:pbl_sem5/pages/login/mulai.dart';
-import 'package:pbl_sem5/models/dosen/informasi/login_user_page.dart';  // Tambahkan import
+import 'package:pbl_sem5/pages/login/login_user_page.dart';  // Tambahkan import
 import 'package:pbl_sem5/pages/dosen/informasi/informasi_dosen_page.dart';
 import 'package:pbl_sem5/pimpinan/utama_pimpinan.dart';
 import 'package:pbl_sem5/pimpinan/monitoring_pimpinan.dart';
