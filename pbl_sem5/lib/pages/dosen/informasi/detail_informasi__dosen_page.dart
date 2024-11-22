@@ -1,6 +1,7 @@
 // lib/pages/dosen/detail_informasi_dosen_page.dart
 import 'package:flutter/material.dart';
-import 'package:pbl_sem5/widgets/header_detail_informasi.dart';
+import 'package:pbl_sem5/services/api_disukai.dart';
+import 'package:pbl_sem5/widgets/dosen/informasi/header_detail_informasi.dart';
 import 'package:pbl_sem5/widgets/navbar.dart';
 import 'package:pbl_sem5/models/dosen/informasi/sertifikasi_rekomendasi_model.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +23,13 @@ class HalamanDetailInformasiDosen extends StatefulWidget {
       _HalamanDetailInformasiDosenState();
 }
 
-class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDosen> {
+class _HalamanDetailInformasiDosenState
+    extends State<HalamanDetailInformasiDosen> {
+  final DisukaiService _disukaiService = DisukaiService();
+  bool isLoading = false;
   bool isLoved = false;
+  String? errorMessage;
+  String? disukaiId;
   bool isSubmitted = false;
   final currencyFormat = NumberFormat.currency(
     locale: 'id_ID',
@@ -31,13 +37,87 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
     decimalDigits: 0,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _checkIfLiked();
+  }
+
+  Future<void> _checkIfLiked() async {
+    setState(() {
+      isLoved = widget.informasi.disukaiId != null;
+      disukaiId = widget.informasi.disukaiId;
+    });
+  }
+
+  Future<void> _toggleLike() async {
+    if (isLoading) return;
+
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final userId = await _disukaiService.getUserId();
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+
+      bool success;
+      if (isLoved && disukaiId != null) {
+        success = await _disukaiService.removeDisukai(disukaiId!);
+      } else {
+        success = await _disukaiService.addDisukai(
+          userId: userId,
+          sertifikasiRekomendasiId:
+              widget.informasi.type == 'sertifikasi' ? widget.informasi.id : null,
+          pelatihanRekomendasiId:
+              widget.informasi.type == 'pelatihan' ? widget.informasi.id : null,
+          tipe: widget.informasi.type,
+        );
+      }
+
+      if (success) {
+        setState(() {
+          isLoved = !isLoved;
+          if (!isLoved) {
+            disukaiId = null;
+          }
+        });
+        
+        // Panggil callback untuk memperbarui tampilan
+        if (widget.onNavigateBack != null) {
+          widget.onNavigateBack();
+        }
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(isLoved ? 'Berhasil menambahkan ke disukai' : 'Berhasil menghapus dari disukai'),
+          ),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage ?? 'Terjadi kesalahan')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   String formatDateRange(DateTime? startDate, DateTime? endDate) {
     if (startDate == null && endDate == null) {
       return 'Tanggal belum ditentukan';
     }
 
     final dateFormat = DateFormat('dd MMMM yyyy', 'id_ID');
-    
+
     if (startDate == null || endDate == null) {
       final date = startDate ?? endDate;
       return dateFormat.format(date!);
@@ -64,7 +144,7 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
 
   Widget _buildPelaksanaanSection() {
     final bool isSertifikasi = widget.informasi is Sertifikasi;
-    
+
     // Ambil tanggal dari objek informasi
     final startDate = isSertifikasi
         ? widget.informasi.sertifikasiStart
@@ -72,7 +152,7 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
     final endDate = isSertifikasi
         ? widget.informasi.sertifikasiEnd
         : widget.informasi.pelatihanEnd;
-    
+
     // Ambil waktu pelaksanaan
     final waktu = widget.informasi.waktuPelaksanaan;
 
@@ -83,7 +163,7 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
     ]);
   }
 
-    Widget _buildHeader(bool isSertifikasi) {
+  Widget _buildHeader(bool isSertifikasi) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,12 +197,16 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
             color: isLoved ? Colors.red : Colors.grey,
             size: 24,
           ),
-          onPressed: () {
-            setState(() {
-              isLoved = !isLoved;
-            });
-          },
+          onPressed: isLoading ? null : _toggleLike,
         ),
+        if (errorMessage != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              errorMessage!,
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
       ],
     );
   }
@@ -273,28 +357,6 @@ class _HalamanDetailInformasiDosenState extends State<HalamanDetailInformasiDose
                               'Selengkapnya',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: isSubmitted ? null : _handleSubmit,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: isSubmitted
-                                  ? Colors.grey
-                                  : const Color(0xFFF99D1C),
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: Text(
-                              isSubmitted ? 'Diajukan' : 'Ajukan',
-                              style: TextStyle(
-                                color: isSubmitted ? Colors.black54 : Colors.white,
                                 fontSize: 14,
                               ),
                             ),

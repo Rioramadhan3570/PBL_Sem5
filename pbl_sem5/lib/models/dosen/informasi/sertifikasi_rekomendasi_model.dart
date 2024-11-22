@@ -1,6 +1,7 @@
 // lib/models/dosen/sertifikasi_rekomendasi_model.dart
 class Sertifikasi {
   final String id;
+  final String? disukaiId;
   final String nama;
   final String tempat;
   final DateTime? sertifikasiStart;
@@ -18,6 +19,7 @@ class Sertifikasi {
 
   Sertifikasi({
     required this.id,
+    this.disukaiId,
     required this.nama,
     required this.tempat,
     this.sertifikasiStart,
@@ -49,6 +51,7 @@ class Sertifikasi {
 
     return Sertifikasi(
       id: json['id']?.toString() ?? '',
+      disukaiId: json['disukai_id']?.toString(),
       nama: json['nama']?.toString() ?? '',
       tempat: json['tempat']?.toString() ?? '',
       sertifikasiStart: json['sertifikasi_start'] != null

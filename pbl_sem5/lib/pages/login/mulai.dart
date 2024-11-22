@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/dosen/informasi/login_user_page.dart';
+import 'login_user_page.dart';
 
 class Mulai extends StatelessWidget {
   const Mulai({super.key});

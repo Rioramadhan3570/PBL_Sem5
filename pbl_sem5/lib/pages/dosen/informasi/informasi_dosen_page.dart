@@ -1,9 +1,9 @@
 // lib/pages/dosen/informasi_dosen_page.dart
 import 'package:flutter/material.dart';
 import 'package:pbl_sem5/pages/dosen/informasi/detail_informasi__dosen_page.dart';
-import 'package:pbl_sem5/widgets/header_informasi.dart';
+import 'package:pbl_sem5/services/api_informasi.dart';
+import 'package:pbl_sem5/widgets/dosen/informasi/header_informasi.dart';
 import 'package:pbl_sem5/widgets/navbar.dart';
-import 'package:pbl_sem5/services/api_service.dart';
 import 'package:pbl_sem5/models/dosen/informasi/sertifikasi_rekomendasi_model.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +16,7 @@ class HalamanInformasiDosen extends StatefulWidget {
 }
 
 class _HalamanInformasiDosenState extends State<HalamanInformasiDosen> {
-  final ApiService _apiService = ApiService();
+  final InformasiService _apiService = InformasiService();
   final List<String> _categories = ['Semua', 'Sertifikasi', 'Pelatihan'];
   int _selectedCategoryIndex = 0;
   List<dynamic> _informasiList = [];

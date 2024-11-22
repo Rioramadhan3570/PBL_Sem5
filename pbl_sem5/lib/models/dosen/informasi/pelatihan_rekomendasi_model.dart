@@ -1,6 +1,7 @@
 // lib/models/dosen/pelatihan_rekomendasi_model.dart
 class Pelatihan {
   final String id;
+  final String? disukaiId;
   final String nama;
   final String tempat;
   final DateTime? pelatihanStart;
@@ -17,6 +18,7 @@ class Pelatihan {
 
   Pelatihan({
     required this.id,
+    this.disukaiId,
     required this.nama,
     required this.tempat,
     this.pelatihanStart,
@@ -47,6 +49,7 @@ class Pelatihan {
 
     return Pelatihan(
       id: json['id']?.toString() ?? '',
+      disukaiId: json['disukai_id']?.toString(),
       nama: json['nama']?.toString() ?? '',
       tempat: json['tempat']?.toString() ?? '',
       pelatihanStart: json['pelatihan_start'] != null
