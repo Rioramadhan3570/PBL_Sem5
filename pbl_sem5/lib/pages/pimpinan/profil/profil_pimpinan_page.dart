@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pbl_sem5/models/profil/profil_response.dart';
-import 'package:pbl_sem5/pages/dosen/suratTugas/surat_tugas_dosen_page.dart';
-import 'package:pbl_sem5/pages/dosen/profil/edit_profil_dosen._page.dart';
-import 'package:pbl_sem5/services/dosen/api_profil_dosen.dart';
-import 'package:pbl_sem5/widgets/dosen/navbar.dart';
-import 'package:pbl_sem5/widgets/dosen/profil/header_profil_dosen.dart';
+import 'package:pbl_sem5/pages/pimpinan/profil/edit_profil_pimpinan_page.dart';
+import 'package:pbl_sem5/pages/pimpinan/suratTugas/surat_tugas_pimpinan.dart';
+import 'package:pbl_sem5/pages/pimpinan/riwayat/riwayat_pimpinan_page.dart';
+import 'package:pbl_sem5/services/pimpinan/api_profil_pimpinan.dart';
+import 'package:pbl_sem5/widgets/pimpinan/navbar.dart';
+import 'package:pbl_sem5/widgets/pimpinan/profil/header_profil_pimpinan.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilDosen extends StatefulWidget {
+class ProfilPimpinan extends StatefulWidget {
   final int selectedIndex;
-  const ProfilDosen({super.key, this.selectedIndex = 4});
+  const ProfilPimpinan({super.key, this.selectedIndex = 4});
 
   @override
-  State<ProfilDosen> createState() => _ProfilDosenState();
+  State<ProfilPimpinan> createState() => _ProfilPimpinanState();
 }
 
-class _ProfilDosenState extends State<ProfilDosen> {
-  late ApiService _apiService;
+class _ProfilPimpinanState extends State<ProfilPimpinan> {
+  late ApiProfilPimpinan _apiService;
   ProfileResponse? _profileData;
   bool _isLoading = true;
   String? _error;
@@ -35,7 +36,7 @@ class _ProfilDosenState extends State<ProfilDosen> {
         throw Exception('Token not found. Please login again.');
       }
 
-      _apiService = ApiService(token: token);
+      _apiService = ApiProfilPimpinan(token: token);
       await _loadProfile();
     } catch (e) {
       if (mounted) {
@@ -103,7 +104,7 @@ class _ProfilDosenState extends State<ProfilDosen> {
       backgroundColor: Colors.white,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
-        child: HeaderProfilDosen(),
+        child: HeaderProfilPimpinan(),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -122,7 +123,7 @@ class _ProfilDosenState extends State<ProfilDosen> {
                   ),
                 )
               : _buildProfileContent(),
-      bottomNavigationBar: Navbar(selectedIndex: widget.selectedIndex),
+      bottomNavigationBar: const Navbar(selectedIndex: 3),
     );
   }
 
@@ -131,7 +132,6 @@ class _ProfilDosenState extends State<ProfilDosen> {
     if (data == null) {
       return const Center(child: Text('No profile data available'));
     }
-
     return RefreshIndicator(
       onRefresh: _loadProfile,
       child: SingleChildScrollView(
@@ -151,14 +151,14 @@ class _ProfilDosenState extends State<ProfilDosen> {
                   color: Colors.grey[300]!,
                   width: 2,
                 ),
-                image: data.dosen.avatar != null
+                image: data.pimpinan.avatar != null
                     ? DecorationImage(
-                        image: NetworkImage(data.dosen.avatar!),
+                        image: NetworkImage(data.pimpinan.avatar!),
                         fit: BoxFit.cover,
                       )
                     : null,
               ),
-              child: data.dosen.avatar == null
+              child: data.pimpinan.avatar == null
                   ? const Icon(Icons.person, size: 50, color: Colors.grey)
                   : null,
             ),
@@ -170,7 +170,7 @@ class _ProfilDosenState extends State<ProfilDosen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '${data.dosen.nip} | ${data.user.level.nama}',
+              '${data.pimpinan.nip} | ${data.user.level.nama}',
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
               textAlign: TextAlign.center,
             ),
@@ -189,12 +189,26 @@ class _ProfilDosenState extends State<ProfilDosen> {
                       final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const EditProfilDosen(),
+                          builder: (context) => const EditProfilPimpinan(),
                         ),
                       );
                       if (result == true) {
                         _loadProfile();
                       }
+                    },
+                  ),
+                  const Divider(
+                      height: 1),
+                  ProfileMenuItem(
+                    icon: Icons.history,
+                    title: 'Riwayat',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const HalamanRiwayatPimpinan()),
+                      );
                     },
                   ),
                   const Divider(height: 1), // Tambahkan pembatas
