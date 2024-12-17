@@ -17,11 +17,14 @@ class HeaderNotifikasiPimpinan extends StatefulWidget {
 }
 
 class _HeaderNotifikasiPimpinanState extends State<HeaderNotifikasiPimpinan> {
-  Color notificationIconColor = Colors.black; // Warna awal ikon notifikasi
-  final LoginService _loginService = LoginService();
+  bool _isNotified = false;
+  final LoginService _loginService = LoginService(); // Instance login service
 
-  void _onBackButtonPressed() {
-    Navigator.pop(context); // Kembali ke halaman sebelumnya
+  void _toggleNotification() {
+    setState(() {
+      _isNotified = !_isNotified;
+    });
+    Navigator.pushNamed(context, '/notifikasi_dosen');
   }
 
   Future<void> _handleLogout() async {
@@ -62,45 +65,30 @@ class _HeaderNotifikasiPimpinanState extends State<HeaderNotifikasiPimpinan> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFFFC300), // Warna latar belakang kuning
+      color: const Color(0xFFFFC300),
       padding: const EdgeInsets.only(top: 40, left: 16, right: 8, bottom: 16),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Teks "Notifikasi" di tengah
           const Text(
             'Notifikasi',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 21,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
-          // Ikon diposisikan di sebelah kiri
-          Positioned(
-            left: 0, // Memposisikan tombol kembali ke kiri
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back,
-                  color: Colors.white), // Ikon kembali
-              onPressed: () {
-                _onBackButtonPressed();
-                // Kirim informasi kembali ke Navbar
-                // Ini bisa dilakukan dengan menggunakan provider atau state management lain
-              },
-            ),
-          ),
-          // Ikon diposisikan ke kanan
           Positioned(
             right: 0,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.notifications,
-                      color: notificationIconColor), // Ikon notifikasi
-                  onPressed: () {
-                    // Menangani penekanan ikon notifikasi
-                  },
+                  icon: Icon(
+                    Icons.notifications,
+                    color: _isNotified ? Colors.white : Colors.white,
+                  ),
+                  onPressed: _toggleNotification,
                 ),
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
@@ -109,6 +97,17 @@ class _HeaderNotifikasiPimpinanState extends State<HeaderNotifikasiPimpinan> {
               ],
             ),
           ),
+          if (widget.showBackButton)
+            Positioned(
+              left: 0,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: widget.onBackPressed ??
+                    () {
+                      Navigator.pop(context);
+                    },
+              ),
+            ),
         ],
       ),
     );

@@ -24,7 +24,7 @@ class _HeaderSuratTugasPimpinanState extends State<HeaderSuratTugasPimpinan> {
     setState(() {
       _isNotified = !_isNotified;
     });
-    Navigator.pushNamed(context, '/notifikasi_dosen');
+    Navigator.pushNamed(context, '/notifikasi_pimpinan');
   }
 
   Future<void> _handleLogout() async {

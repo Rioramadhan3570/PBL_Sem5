@@ -21,7 +21,6 @@ class _NotifikasiDosenState extends State<NotifikasiDosen> {
   List<NotifikasiModel> _notifikasi = [];
   bool _isLoading = true;
 
-
   @override
   void initState() {
     super.initState();
@@ -74,12 +73,14 @@ class _NotifikasiDosenState extends State<NotifikasiDosen> {
         );
 
         // Ambil semua riwayat dan cari yang sesuai dengan notifikasi
-        final List<RiwayatModel> allRiwayat = await _apiRiwayatDosen.getRiwayat();
+        final List<RiwayatModel> allRiwayat =
+            await _apiRiwayatDosen.getRiwayat();
         final RiwayatModel matchingRiwayat = allRiwayat.firstWhere(
-          (riwayat) => riwayat.judul.toLowerCase() == notifikasi.judul.toLowerCase(),
+          (riwayat) =>
+              riwayat.judul.toLowerCase() == notifikasi.judul.toLowerCase(),
           orElse: () => throw Exception('Riwayat tidak ditemukan'),
         );
-        
+
         // Tutup dialog loading
         Navigator.pop(context);
 
@@ -99,7 +100,7 @@ class _NotifikasiDosenState extends State<NotifikasiDosen> {
         if (Navigator.canPop(context)) {
           Navigator.pop(context);
         }
-        
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -112,13 +113,14 @@ class _NotifikasiDosenState extends State<NotifikasiDosen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(150),
-        child: const HeaderNotifikasiDosen(),
+        child: const HeaderNotifikasiDosen(
+          showBackButton: true,
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: _fetchNotifikasi,
