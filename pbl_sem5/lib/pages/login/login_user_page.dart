@@ -1,6 +1,6 @@
-// lib/pages/login/login_user_page.dart
 import 'package:flutter/material.dart';
 import 'package:pbl_sem5/models/login/user_model.dart';
+import 'package:pbl_sem5/pages/login/error_dialog.dart';
 import 'package:pbl_sem5/pages/login/login_base_mixim.dart';
 import 'package:pbl_sem5/services/api_login.dart';
 
@@ -17,23 +17,59 @@ class _LoginPageState extends State<LoginPage> with LoginValidationMixin {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final LoginService _apiService = LoginService();
-  String _selectedRole = 'dosen';
+  String? _selectedRole;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   Future<void> _handleLogin() async {
-    setState(() => _isLoading = true);
+    // List untuk mengumpulkan semua pesan error validasi awal
+    List<String> errors = [];
 
-    final username = _usernameController.text;
+    // Validasi username
+    final username = _usernameController.text.trim();
+    if (username.isEmpty) {
+      errors.add("Username");
+    }
+
+    // Validasi password
     final password = _passwordController.text;
+    if (password.isEmpty) {
+      errors.add("Password");
+    }
 
-    String? validationMessage = validateLogin(username, password);
-    if (validationMessage != null) {
-      showErrorMessage(context, validationMessage);
-      setState(() => _isLoading = false);
+    // Validasi role
+    if (_selectedRole == null) {
+      errors.add("Role");
+    }
+
+    // Jika ada error validasi awal, tampilkan semuanya dalam satu popup
+    if (errors.isNotEmpty) {
+      String errorMessage = '';
+      if (errors.length == 1) {
+        errorMessage = '${errors[0]} harus diisi terlebih dahulu';
+      } else if (errors.length == 2) {
+        errorMessage = '${errors.join(" dan ")} harus diisi terlebih dahulu';
+      } else {
+        errorMessage =
+            '${errors.take(errors.length - 1).join(", ")} dan ${errors.last} harus diisi terlebih dahulu';
+      }
+      ErrorDialog.show(context, errorMessage);
       return;
     }
 
+    setState(() => _isLoading = true);
+
     try {
-      final result = await _apiService.login(username, password, _selectedRole);
+      final result =
+          await _apiService.login(username, password, _selectedRole!);
+
+      if (!mounted) return;
 
       if (result['success']) {
         UserModel user = result['data'];
@@ -44,20 +80,52 @@ class _LoginPageState extends State<LoginPage> with LoginValidationMixin {
         } else if (_selectedRole == 'pimpinan' && userRole == 'pmp') {
           Navigator.pushReplacementNamed(context, '/utama_pimpinan');
         } else {
-          showErrorMessage(context, "Anda tidak memiliki akses untuk login sebagai ${_selectedRole}");
+          ErrorDialog.show(
+              context,
+              _selectedRole == 'dosen'
+                  ? 'Anda tidak memiliki akses sebagai Dosen'
+                  : 'Anda tidak memiliki akses sebagai Pimpinan');
         }
       } else {
-        showErrorMessage(context, result['message']);
+        // Handle specific error responses
+        String errorMessage = '';
+        if (result['message'].toString().contains('404')) {
+          errorMessage = 'Username yang anda masukkan salah';
+        } else if (result['message'].toString().contains('401')) {
+          errorMessage = 'Username atau Password yang anda masukkan salah';
+        } else if (result['message'].toString().contains('Server')) {
+          errorMessage = 'Terjadi kesalahan pada server';
+        } else {
+          errorMessage = result['message'] ?? 'Gagal melakukan login';
+        }
+        ErrorDialog.show(context, errorMessage);
       }
     } catch (e) {
-      showErrorMessage(context, "Terjadi kesalahan saat login");
+      String errorMessage;
+      if (e.toString().contains('SocketException')) {
+        errorMessage = 'Koneksi internet bermasalah';
+      } else if (e.toString().contains('404')) {
+        errorMessage = 'Username yang anda masukkan salah';
+      } else if (e.toString().contains('401')) {
+        errorMessage = 'Password yang anda masukkan salah';
+      } else {
+        errorMessage = 'Terjadi kesalahan saat login';
+      }
+      ErrorDialog.show(context, errorMessage);
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+
+    const double borderRadius = 20.0;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -69,145 +137,207 @@ class _LoginPageState extends State<LoginPage> with LoginValidationMixin {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 459), // Adjusted spacing based on the image
-                    const Text(
-                      'Masukkan Akun Anda',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Role Selector
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.white, width: 1),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: _selectedRole,
-                          dropdownColor: Colors.black87,
-                          isExpanded: true,
-                          icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                          items: [
-                            DropdownMenuItem(
-                              value: 'dosen',
-                              child: Text('Dosen',
-                                style: TextStyle(color: Colors.white)
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 'pimpinan',
-                              child: Text('Pimpinan',
-                                style: TextStyle(color: Colors.white)
-                              ),
-                            ),
-                          ],
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              setState(() => _selectedRole = newValue);
-                            }
-                          },
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: isSmallScreen ? 16.0 : 24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: screenSize.height * 0.35),
+                      Text(
+                        'Masukkan Akun Anda',
+                        style: TextStyle(
+                          fontSize: isSmallScreen ? 16 : 20,
+                          color: Colors.white,
+                          letterSpacing: 0.5,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
+                      SizedBox(height: screenSize.height * 0.04),
 
-                    // Username Field
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.white, width: 1),
-                      ),
-                      child: TextField(
-                        controller: _usernameController,
-                        style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          hintText: 'Username',
-                          hintStyle: TextStyle(color: Colors.white70),
-                          prefixIcon: Icon(Icons.person_outline, color: Colors.white),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Password Field
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.white, width: 1),
-                      ),
-                      child: TextField(
-                        controller: _passwordController,
-                        obscureText: _obscureText,
-                        style: const TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: const TextStyle(color: Colors.white70),
-                          prefixIcon: const Icon(Icons.lock_outline, color: Colors.white),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => setState(() => _obscureText = !_obscureText),
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Login Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          elevation: 0,
-                        ),
-                        onPressed: _isLoading ? null : _handleLogin,
-                        child: _isLoading
-                            ? const SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
+                      // Role Selector
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: _isLoading
+                                ? null
+                                : () {
+                                    setState(() => _selectedRole = 'pimpinan');
+                                  },
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                    color: _selectedRole == 'pimpinan'
+                                        ? const Color(0xFFC13541)
+                                        : Colors.transparent,
+                                  ),
                                 ),
-                              )
-                            : const Text(
-                                'Login',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  letterSpacing: 1,
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Pimpinan',
+                                  style: TextStyle(
+                                    fontSize: isSmallScreen ? 14 : 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
+                              ],
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: _isLoading
+                                ? null
+                                : () {
+                                    setState(() => _selectedRole = 'dosen');
+                                  },
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                    color: _selectedRole == 'dosen'
+                                        ? const Color(
+                                            0xFFC13541) // Menggunakan kode warna #c13541
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Dosen',
+                                  style: TextStyle(
+                                    fontSize: isSmallScreen ? 14 : 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      SizedBox(height: screenSize.height * 0.02),
+
+                      // Username Field
+                      Container(
+                        height: isSmallScreen ? 50 : 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(borderRadius),
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                        child: TextFormField(
+                          controller: _usernameController,
+                          enabled: !_isLoading,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: 'Username',
+                            hintStyle: TextStyle(
+                              color: Colors.white70,
+                              fontSize: isSmallScreen ? 14 : 16,
+                            ),
+                            prefixIcon: const Icon(Icons.person_outline,
+                                color: Colors.white),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: isSmallScreen ? 10 : 12,
+                              horizontal: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.02),
+
+                      // Password Field
+                      Container(
+                        height: isSmallScreen ? 50 : 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(borderRadius),
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          enabled: !_isLoading,
+                          obscureText: _obscureText,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: TextStyle(
+                              color: Colors.white70,
+                              fontSize: isSmallScreen ? 14 : 16,
+                            ),
+                            prefixIcon: const Icon(Icons.lock_outline,
+                                color: Colors.white),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: Colors.white,
+                              ),
+                              onPressed: _isLoading
+                                  ? null
+                                  : () => setState(
+                                      () => _obscureText = !_obscureText),
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: isSmallScreen ? 10 : 12,
+                              horizontal: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+
+                      // Login Button
+                      SizedBox(
+                        width: double.infinity,
+                        height: isSmallScreen ? 50 : 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(borderRadius),
+                            ),
+                            elevation: 0,
+                          ),
+                          onPressed: _isLoading ? null : _handleLogin,
+                          child: _isLoading
+                              ? SizedBox(
+                                  height: isSmallScreen ? 20 : 24,
+                                  width: isSmallScreen ? 20 : 24,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: isSmallScreen ? 14 : 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -220,7 +350,7 @@ class _LoginPageState extends State<LoginPage> with LoginValidationMixin {
 
 extension StringExtension on String {
   String capitalize() {
-    if (this.isEmpty) return this;
-    return "${this[0].toUpperCase()}${this.substring(1)}";
+    if (isEmpty) return this;
+    return "${this[0].toUpperCase()}${substring(1)}";
   }
 }
