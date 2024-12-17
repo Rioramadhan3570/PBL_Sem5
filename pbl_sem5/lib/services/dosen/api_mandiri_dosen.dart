@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pbl_sem5/models/dosen/mandiri/generic_response.dart';
 import 'package:pbl_sem5/models/dosen/mandiri/mandiri_detail_model.dart';
 import 'package:pbl_sem5/models/dosen/mandiri/pelatihan_mandiri.dart';
 import 'package:pbl_sem5/models/dosen/mandiri/sertifikasi_mandiri.dart';

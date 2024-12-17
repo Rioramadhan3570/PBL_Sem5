@@ -4,7 +4,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:pbl_sem5/models/dosen/beranda/beranda_model.dart';
 import 'package:pbl_sem5/pages/dosen/rekomendasi/detail_rekomendasi_dosen_page.dart';
 import 'package:pbl_sem5/pages/running_figure.dart';
-import 'package:pbl_sem5/services/api_config.dart';
 import 'package:pbl_sem5/services/api_login.dart';
 import 'package:pbl_sem5/services/dosen/api_beranda_dosen.dart';
 import 'package:pbl_sem5/widgets/dosen/navbar.dart';
@@ -105,14 +104,21 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _loadData,
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildStatsSection(),
-            Expanded(
-              child: _buildRecentInfoSection(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 
+                        kBottomNavigationBarHeight,
             ),
-          ],
+            child: Column(
+              children: [
+                _buildHeader(),
+                _buildStatsSection(),
+                _buildRecentInfoSection(),
+              ],
+            ),
+          ),
         ),
       ),
       bottomNavigationBar: const Navbar(selectedIndex: 0),

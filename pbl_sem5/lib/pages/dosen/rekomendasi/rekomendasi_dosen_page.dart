@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pbl_sem5/models/dosen/rekomendasi/rekomendasi_list_model.dart';
 import 'package:pbl_sem5/pages/dosen/rekomendasi/detail_rekomendasi_dosen_page.dart';
 import 'package:pbl_sem5/services/dosen/api_rekomendasi_dosen.dart';
@@ -87,48 +86,70 @@ class _HalamanRekomendasiDosenState extends State<HalamanRekomendasiDosen> {
 
   Widget _buildCategorySelector() {
     return Container(
-      height: 35,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(_categories.length, (index) {
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedCategoryIndex = index;
-                });
-                _loadRekomendasi();
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 2),
-                decoration: BoxDecoration(
-                  color: _selectedCategoryIndex == index
-                      ? const Color(0xFF0E1F43)
-                      : const Color(0xFFDBDDE3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+      color: Colors.white,
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Row(
+          children: List.generate(
+            _categories.length,
+            (index) => Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedCategoryIndex = index;
+                  });
+                  _loadRekomendasi();
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: _selectedCategoryIndex == index
+                        ? const Color(0xFF0E1F43)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                   child: Text(
                     _categories[index],
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: _selectedCategoryIndex == index
                           ? Colors.white
                           : Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
                   ),
                 ),
               ),
             ),
-          );
-        }),
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildSelectedView() {
+    if (_allRekomendasi.isEmpty) {
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: const [
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Tidak ada rekomendasi'),
+            ),
+          ),
+        ],
+      );
+    }
+
     return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: _allRekomendasi.length,
       padding: const EdgeInsets.only(top: 8),
       itemBuilder: (context, index) {
