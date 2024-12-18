@@ -147,7 +147,10 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
                   radius: 25,
                   backgroundImage: _berandaData!.profile.avatar != null
                       ? NetworkImage(_berandaData!.profile.avatar!)
-                      : const NetworkImage('https://via.placeholder.com/50'),
+                      : null,
+                      child: _berandaData!.profile.avatar == null
+                      ? const Icon(Icons.person, size: 25, color: Colors.grey)
+                      : null,
                 ),
                 const SizedBox(width: 10),
                 Expanded(

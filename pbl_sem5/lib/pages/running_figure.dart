@@ -35,7 +35,7 @@ class _RunningFigureState extends State<RunningFigure> with SingleTickerProvider
           offset: Offset(0, _controller.value * 10),
           child: const Icon(
             Icons.directions_run,
-            color: Colors.pink,
+            color: Color(0xFFF36619),
             size: 48,
           ),
         );
@@ -67,9 +67,9 @@ Future<void> showCustomLogoutDialog(BuildContext context, Future<void> Function(
               const RunningFigure(),
               const SizedBox(height: 20),
               const Text(
-                'Are you sure you want to quit?',
+                'Apakah Anda Yakin Ingin Keluar?',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -89,14 +89,14 @@ Future<void> showCustomLogoutDialog(BuildContext context, Future<void> Function(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('NO', style: TextStyle(fontSize: 16)),
+                      child: const Text('Tidak', style: TextStyle(fontSize: 16)),
                     ),
                   ),
                   const SizedBox(width: 20),
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.pink,
+                        backgroundColor: Color(0xFFF36619),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -113,7 +113,7 @@ Future<void> showCustomLogoutDialog(BuildContext context, Future<void> Function(
                           builder: (BuildContext context) {
                             return const Center(
                               child: CircularProgressIndicator(
-                                color: Colors.pink,
+                                color:Color(0xFFF36619),
                               ),
                             );
                           },
@@ -127,7 +127,7 @@ Future<void> showCustomLogoutDialog(BuildContext context, Future<void> Function(
                           Navigator.of(context).pop();
                         }
                       },
-                      child: const Text('YES', style: TextStyle(fontSize: 16)),
+                      child: const Text('Ya', style: TextStyle(fontSize: 16)),
                     ),
                   ),
                 ],
