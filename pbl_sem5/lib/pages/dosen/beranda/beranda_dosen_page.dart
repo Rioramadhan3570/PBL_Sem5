@@ -291,70 +291,79 @@ class _HalamanUtamaDosenState extends State<HalamanUtamaDosen> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemCount: _berandaData?.latestRekomendasi.length ?? 0,
-          itemBuilder: (context, index) {
-            final item = _berandaData?.latestRekomendasi[index];
-            return InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HalamanDetailRekomendasiDosen(
-                    id: item?.id ?? '',
-                    tipe: item?.tipe ?? '',
+        if (_berandaData?.latestRekomendasi.isNotEmpty ?? false)
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemCount: _berandaData?.latestRekomendasi.length ?? 0,
+            itemBuilder: (context, index) {
+              final item = _berandaData?.latestRekomendasi[index];
+              return InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HalamanDetailRekomendasiDosen(
+                      id: item?.id ?? '',
+                      tipe: item?.tipe ?? '',
+                    ),
                   ),
                 ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0x66FDE1B9),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item?.judul ?? '',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    color: const Color(0x66FDE1B9),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item?.judul ?? '',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: item?.tipe == 'Sertifikasi'
-                            ? Colors.blue.withOpacity(0.2)
-                            : Colors.green.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        item?.tipe ?? '',
-                        style: TextStyle(
-                          fontSize: 12,
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
                           color: item?.tipe == 'Sertifikasi'
-                              ? Colors.blue
-                              : Colors.green,
+                              ? Colors.blue.withOpacity(0.2)
+                              : Colors.green.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          item?.tipe ?? '',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: item?.tipe == 'Sertifikasi'
+                                ? Colors.blue
+                                : Colors.green,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
+              );
+            },
+          )
+        else
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: Text(
+              'Tidak ada data rekomendasi terbaru',
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
       ],
     );
   }

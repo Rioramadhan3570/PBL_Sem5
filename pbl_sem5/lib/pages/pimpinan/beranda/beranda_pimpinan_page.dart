@@ -213,28 +213,28 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
     );
   }
 
- Widget _buildStatsSection() {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(16, 25, 16, 10),
-    child: Row(
-      children: [
-        Expanded(
-          child: _buildStatCard(
-            'Pengajuan Sertifikasi',
-            _berandaData!.statistics.totalSertifikasi.toString(),
+  Widget _buildStatsSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 25, 16, 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildStatCard(
+              'Pengajuan Sertifikasi',
+              _berandaData!.statistics.totalSertifikasi.toString(),
+            ),
           ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: _buildStatCard(
-            'Pengajuan Pelatihan',
-            _berandaData!.statistics.totalPelatihan.toString(),
+          const SizedBox(width: 16),
+          Expanded(
+            child: _buildStatCard(
+              'Pengajuan Pelatihan',
+              _berandaData!.statistics.totalPelatihan.toString(),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   Widget _buildStatCard(String title, String value) {
     return Container(
@@ -287,70 +287,78 @@ class _HalamanUtamaPimpinanState extends State<HalamanUtamaPimpinan> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: _berandaData!.latestRekomendasi.length,
-            itemBuilder: (context, index) {
-              final rekomendasi = _berandaData!.latestRekomendasi[index];
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailRekomendasiPage(
-                        id: rekomendasi.id,
-                        kategori: rekomendasi.kategori,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  margin: const EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0x66FDE1B9),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey.withOpacity(0.2)),
+          child: _berandaData!.latestRekomendasi.isEmpty
+              ? const Center(
+                  child: Text(
+                    'Tidak ada data pengajuan terbaru',
+                    style: TextStyle(fontSize: 16),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          rekomendasi.judul,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: _berandaData!.latestRekomendasi.length,
+                  itemBuilder: (context, index) {
+                    final rekomendasi = _berandaData!.latestRekomendasi[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailRekomendasiPage(
+                              id: rekomendasi.id,
+                              kategori: rekomendasi.kategori,
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(bottom: 8),
                         decoration: BoxDecoration(
-                          color: rekomendasi.kategori == 'Sertifikasi'
-                              ? Colors.blue.withOpacity(0.2)
-                              : Colors.green.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(4),
+                          color: const Color(0x66FDE1B9),
+                          borderRadius: BorderRadius.circular(8),
+                          border:
+                              Border.all(color: Colors.grey.withOpacity(0.2)),
                         ),
-                        child: Text(
-                          rekomendasi.kategori,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: rekomendasi.kategori == 'Sertifikasi'
-                                ? Colors.blue
-                                : Colors.green,
-                          ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                rekomendasi.judul,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: rekomendasi.kategori == 'Sertifikasi'
+                                    ? Colors.blue.withOpacity(0.2)
+                                    : Colors.green.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                rekomendasi.kategori,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: rekomendasi.kategori == 'Sertifikasi'
+                                      ? Colors.blue
+                                      : Colors.green,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
       ],
     );

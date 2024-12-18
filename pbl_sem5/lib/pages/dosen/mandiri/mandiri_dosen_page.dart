@@ -1,7 +1,6 @@
 // pages/dosen/mandiri/mandiri_dosen_page.dart
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:pbl_sem5/models/Date%20Formate/date_format_monitoring.dart';
 import 'package:pbl_sem5/models/dosen/mandiri/pelatihan_mandiri.dart';
 import 'package:pbl_sem5/models/dosen/mandiri/sertifikasi_mandiri.dart';
 import 'package:pbl_sem5/pages/dosen/mandiri/detail_mandiri_dosen_page.dart';
@@ -134,19 +133,22 @@ class _HalamanMandiriDosenState extends State<HalamanMandiriDosen> {
         preferredSize: Size.fromHeight(60),
         child: HeaderMandiriDosen(),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          _buildCategorySelector(),
-          const SizedBox(height: 8),
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _error != null
-                    ? Center(child: Text(_error!))
-                    : _buildSelectedView(),
-          ),
-        ],
+      body: RefreshIndicator(
+        onRefresh: _loadData,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: _buildCategorySelector(),
+            ),
+            SliverFillRemaining(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _error != null
+                      ? Center(child: Text(_error!))
+                      : _buildSelectedView(),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddKegiatanDialog,
@@ -158,41 +160,43 @@ class _HalamanMandiriDosenState extends State<HalamanMandiriDosen> {
 
   Widget _buildCategorySelector() {
     return Container(
-      height: 35,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(_categories.length, (index) {
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedCategoryIndex = index;
-                });
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 2),
-                decoration: BoxDecoration(
-                  color: _selectedCategoryIndex == index
-                      ? const Color(0xFF0E1F43)
-                      : const Color(0xFFDBDDE3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      color: Colors.white,
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Row(
+          children: List.generate(_categories.length, (index) {
+            return Expanded(
+              child: GestureDetector(
+                onTap: () => setState(() => _selectedCategoryIndex = index),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: _selectedCategoryIndex == index
+                        ? const Color(0xFF0E1F43)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                   child: Text(
                     _categories[index],
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: _selectedCategoryIndex == index
                           ? Colors.white
                           : Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -200,7 +204,25 @@ class _HalamanMandiriDosenState extends State<HalamanMandiriDosen> {
   Widget _buildSelectedView() {
     final items = _selectedCategoryIndex == 0 ? _sertifikasi : _pelatihan;
 
+    if (items.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Tidak ada data mandiri ${_categories[_selectedCategoryIndex]}',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF737985),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: items.length,
       padding: const EdgeInsets.only(top: 8),
       itemBuilder: (context, index) {

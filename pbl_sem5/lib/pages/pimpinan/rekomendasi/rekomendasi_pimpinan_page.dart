@@ -145,6 +145,15 @@ class _HalamanRekomendasiPimpinanState
         filteredList = _allKegiatan;
     }
 
+    if (filteredList.isEmpty) {
+      return const Center(
+        child: Text(
+          'Tidak ada data pengajuan',
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+    }
+
     return ListView.builder(
       itemCount: filteredList.length,
       padding: const EdgeInsets.only(top: 8),

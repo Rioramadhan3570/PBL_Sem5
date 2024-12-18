@@ -211,68 +211,76 @@ class _RiwayatDosenState extends State<RiwayatDosen> {
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: filteredRiwayat.length,
-                      itemBuilder: (context, index) {
-                        final riwayat = filteredRiwayat[index];
-                        return GestureDetector(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailRiwayat(riwayat: riwayat),
-                            ),
-                          ).then((_) => _fetchRiwayat()),
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.orange[50],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  riwayat.judul,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
+                  : filteredRiwayat.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Tidak ada data riwayat',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: filteredRiwayat.length,
+                          itemBuilder: (context, index) {
+                            final riwayat = filteredRiwayat[index];
+                            return GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailRiwayat(riwayat: riwayat),
                                 ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  riwayat.kategori,
-                                  style: const TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 14,
-                                  ),
+                              ).then((_) => _fetchRiwayat()),
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[50],
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                const SizedBox(height: 10),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: ElevatedButton(
-                                    onPressed: null,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          _getStatusColor(riwayat.statusBukti),
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      riwayat.judul,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                       ),
                                     ),
-                                    child: Text(_getDisplayStatus(
-                                        riwayat.statusBukti,
-                                        riwayat.isBuktiUploaded)),
-                                  ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      riwayat.kategori,
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: ElevatedButton(
+                                        onPressed: null,
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: _getStatusColor(
+                                              riwayat.statusBukti),
+                                          foregroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        child: Text(_getDisplayStatus(
+                                            riwayat.statusBukti,
+                                            riwayat.isBuktiUploaded)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                              ),
+                            );
+                          },
+                        ),
             ),
           ],
         ),
