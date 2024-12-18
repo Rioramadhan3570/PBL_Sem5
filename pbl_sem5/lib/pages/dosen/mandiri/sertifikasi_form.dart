@@ -307,28 +307,30 @@ class _SertifikasiFormState extends State<SertifikasiForm> {
       orElse: () => Vendor(vendorId: '', vendorNama: ''),
     );
 
-    return FormField<String>(
+     return FormField<String>(
       builder: (state) {
         return InkWell(
           onTap: _showVendorDialog,
           child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: selectedVendor.vendorId.isNotEmpty ? 'Vendor' : null,
-              hintText: 'Pilih Vendor',
-              border: const OutlineInputBorder(),
+            decoration: const InputDecoration(
+              labelText: 'Vendor',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              border: OutlineInputBorder(),
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             ),
+            isEmpty: selectedVendor.vendorId.isEmpty,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   selectedVendor.vendorId.isNotEmpty
                       ? selectedVendor.vendorNama
-                      : '',
+                      : 'Pilih Vendor',
                   style: TextStyle(
-                    color:
-                        _selectedVendorId != null ? Colors.black : Colors.grey,
+                    color: selectedVendor.vendorId.isNotEmpty
+                        ? Colors.black
+                        : Colors.grey[600],
                   ),
                 ),
                 const Icon(Icons.arrow_drop_down),
